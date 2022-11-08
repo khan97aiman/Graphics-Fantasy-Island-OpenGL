@@ -70,9 +70,7 @@ protected:
 		glPopDebugGroup();
 	}
 
-	Matrix4 projMatrix;		//Projection matrix
 	Matrix4 modelMatrix;	//Model matrix. NOT MODELVIEW
-	Matrix4 viewMatrix;		//View matrix
 	Matrix4 textureMatrix;	//Texture matrix
 	Matrix4 shadowMatrix;
 

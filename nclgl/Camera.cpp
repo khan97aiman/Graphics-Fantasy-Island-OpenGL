@@ -8,6 +8,18 @@ Camera::Camera(float pitch, float yaw, Vector3 position) {
 }
 
 void Camera::UpdateCamera(float dt) {
+	UpdateCameraFromUserInput(dt);
+	BuildViewMatrix();
+	frameFrustum.BuildFustrum(projectionMatrix * viewMatrix);
+}
+
+void Camera::BuildViewMatrix() {
+	viewMatrix = Matrix4::Rotation(-pitch, Vector3(1, 0, 0)) *
+		Matrix4::Rotation(-yaw, Vector3(0, 1, 0)) *
+		Matrix4::Translation(-position);
+}
+
+void Camera::UpdateCameraFromUserInput(float dt) {
 	pitch -= (Window::GetMouse()->GetRelativePosition().y);
 	yaw -= (Window::GetMouse()->GetRelativePosition().x);
 	pitch = std::min(pitch, 90.0f);
@@ -42,10 +54,4 @@ void Camera::UpdateCamera(float dt) {
 	if (Window::GetKeyboard()->KeyDown(KEYBOARD_SPACE)) {
 		position.y -= speed;
 	}
-}
-
-void Camera::BuildViewMatrix() {
-	viewMatrix = Matrix4::Rotation(-pitch, Vector3(1, 0, 0)) *
-		Matrix4::Rotation(-yaw, Vector3(0, 1, 0)) *
-		Matrix4::Translation(-position);
 }

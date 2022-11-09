@@ -4,7 +4,7 @@
 #include <nclgl/GeometryNode.h>
 
 
-Scene::Scene() {
+Scene::Scene(int width, int height) {
 	geometries.push_back(Mesh::GenerateTriangle());
 	Shader* basicShader1 = new Shader("matrixVertex.glsl", "colourFragment.glsl");
 	if (!basicShader1->LoadSuccess()) {
@@ -19,7 +19,7 @@ Scene::Scene() {
 
 	world = new GroupNode("World");
 
-	SceneNode* camera = new PerspectiveCamera(0.0f, 0.0f, Vector3(0.0f, 0.0f, 0.0f), 1.0f, 10000.0f, (float)800 / (float)600, 45.0f);
+	SceneNode* camera = new PerspectiveCamera(0.0f, 0.0f, Vector3(0.0f, 0.0f, 0.0f), 1.0f, 10000.0f, (float)width / (float)height, 45.0f);
 	
 	world->AddChild(camera);
 

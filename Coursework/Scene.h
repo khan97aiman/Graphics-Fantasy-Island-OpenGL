@@ -4,7 +4,7 @@
 
 class Scene : public GroupNode {
 public:
-	Scene();
+	Scene(int width, int height);
 	~Scene();
 	void Render();
 	void Update(float dt);

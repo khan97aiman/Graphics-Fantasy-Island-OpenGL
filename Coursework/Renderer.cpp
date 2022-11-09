@@ -1,7 +1,7 @@
 #include "Renderer.h"
 
 Renderer::Renderer(Window &parent) : OGLRenderer(parent)	{
-	scene = new Scene();
+	scene = new Scene(width, height);
 
 	init = true;
 }

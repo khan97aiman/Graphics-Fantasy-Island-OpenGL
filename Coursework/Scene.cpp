@@ -49,6 +49,12 @@ Scene::~Scene() {
 	}
 }
 
+void Scene::BindShader(Shader* s) {
+	currentShader = s;
+	glUseProgram(s->GetProgram());
+}
+
+
 void Scene::Render() {
 	for (auto const& i : children) {
 		if (i->GetNodeType() == GEOMETRY) {

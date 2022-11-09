@@ -14,26 +14,8 @@ void GroupNode::AddChild(SceneNode* s) {
 }
 
 
-void GroupNode::BindShader(Shader* s) {
-	currentShader = s;
-	glUseProgram(s->GetProgram());
-}
-
 void GroupNode::Render() {
-	for (auto const& i : children) {
-		if (i->GetNodeType() == GEOMETRY) {
-			BindShader(dynamic_cast<GeometryNode*>(i)->GetShader());
-			glUniformMatrix4fv(glGetUniformLocation(currentShader->GetProgram(), "modelMatrix"), 1, false, dynamic_cast<GeometryNode*>(i)->GetModelMatrix().values);
-			for (auto const& i : children) {
-				if (i->GetNodeType() == CAMERA) {
-					glUniformMatrix4fv(glGetUniformLocation(currentShader->GetProgram(), "viewMatrix"), 1, false, dynamic_cast<Camera*>(i)->GetViewMatrix().values);
-					glUniformMatrix4fv(glGetUniformLocation(currentShader->GetProgram(), "projMatrix"), 1, false, dynamic_cast<Camera*>(i)->GetProjectionMatrix().values);
-
-				}
-			}
-			dynamic_cast<GeometryNode*>(i)->Render();
-		}
-	}
+	//what to do here?? they are not renderable
 		//types of nodes
 		//get geometry node:
 		//bind shader

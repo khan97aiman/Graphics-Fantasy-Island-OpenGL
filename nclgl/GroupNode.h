@@ -17,11 +17,9 @@ public:
 	void AddChild(SceneNode* s);
 	virtual void Update(float dt);
 	virtual void Render();
-	void BindShader(Shader* s);
 	virtual NodeType GetNodeType() { return GROUP; }
 protected:
 	std::vector<SceneNode*> children;
 	Matrix4 worldTransform;
 	Matrix4 transform;
-	Shader* currentShader;
 };

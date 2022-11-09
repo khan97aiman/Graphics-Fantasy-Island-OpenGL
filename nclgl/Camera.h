@@ -9,7 +9,6 @@ public:
 	Camera(float pitch, float yaw, Vector3 position);
 	virtual ~Camera(void) {};
 	void Update(float dt);
-	void Render();
 	void BuildViewMatrix();
 	virtual void BuildProjectionMatrix() = 0;
 	NodeType GetNodeType() { return CAMERA; }

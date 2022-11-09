@@ -15,7 +15,6 @@ public:
 	SceneNode(std::string name): name(name) {}
 	virtual ~SceneNode() {}
 	void SetParent(SceneNode* parent) { this->parent = parent; }
-	//virtual void Animate() = 0;
 	virtual void Update(float dt) = 0;
 	virtual NodeType GetNodeType() = 0;
 protected:

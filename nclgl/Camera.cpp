@@ -13,13 +13,6 @@ void Camera::Update(float dt) {
 	frameFrustum.BuildFustrum(projectionMatrix * viewMatrix);
 }
 
-void Camera::Render() {
-	/*if (shader) {
-		glUniformMatrix4fv(glGetUniformLocation(shader->GetProgram(), "viewMatrix"), 1, false, viewMatrix.values);
-		glUniformMatrix4fv(glGetUniformLocation(shader->GetProgram(), "projMatrix"), 1, false, projectionMatrix.values);
-	}*/
-}
-
 void Camera::BuildViewMatrix() {
 	viewMatrix = Matrix4::Rotation(-pitch, Vector3(1, 0, 0)) *
 		Matrix4::Rotation(-yaw, Vector3(0, 1, 0)) *

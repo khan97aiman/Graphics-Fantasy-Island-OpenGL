@@ -3,7 +3,6 @@
 
 class OrthographicCamera : public Camera {
 public:
-	OrthographicCamera() = default;
 	OrthographicCamera(float pitch, float yaw, Vector3 position, float znear, float zfar, float right, float left, float top, float bottom) : Camera(pitch, yaw, position) {
 		this->znear = znear;
 		this->zfar = zfar;

@@ -3,7 +3,6 @@
 
 class PerspectiveCamera : public Camera {
 public:
-	PerspectiveCamera() = default;
 	PerspectiveCamera(float pitch, float yaw, Vector3 position, float znear, float zfar, float aspect, float fov) : Camera(pitch, yaw, position) {
 		this->znear = znear;
 		this->zfar = zfar;

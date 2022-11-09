@@ -10,6 +10,4 @@ public:
 	 void UpdateScene(float msec)	override;
 protected:
 	Scene* scene;
-	std::vector<Shader*> shaders;
-
 };

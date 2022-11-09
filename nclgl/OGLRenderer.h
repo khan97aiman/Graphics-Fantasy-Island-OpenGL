@@ -60,7 +60,6 @@ public:
 protected:
 	virtual void	Resize(int x, int y);	
 	void			UpdateShaderMatrices();
-	void			BindShader(Shader*s);
 
 	void StartDebugGroup(const std::string& s) {
 		glPushDebugGroup(GL_DEBUG_SOURCE_APPLICATION, 0, (GLsizei)s.length(), s.c_str());
@@ -70,16 +69,11 @@ protected:
 		glPopDebugGroup();
 	}
 
-	Matrix4 modelMatrix;	//Model matrix. NOT MODELVIEW
-	Matrix4 textureMatrix;	//Texture matrix
-	Matrix4 shadowMatrix;
-
 	int		width;			//Render area width (not quite the same as window width)
 	int		height;			//Render area height (not quite the same as window height)
 	bool	init;			//Did the renderer initialise properly?
 
 private:
-	Shader* currentShader;	
 	HDC		deviceContext;	//...Device context?
 	HGLRC	renderContext;	//Permanent Rendering Context
 #ifdef _DEBUG

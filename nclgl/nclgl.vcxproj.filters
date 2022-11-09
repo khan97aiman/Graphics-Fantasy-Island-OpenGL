@@ -41,17 +41,11 @@
     <ClCompile Include="Plane.cpp">
       <Filter>Camera</Filter>
     </ClCompile>
-    <ClCompile Include="Light.cpp">
-      <Filter>Lights</Filter>
+    <ClCompile Include="GroupNode.cpp">
+      <Filter>Scene</Filter>
     </ClCompile>
-    <ClCompile Include="DirectionalLight.cpp">
-      <Filter>Lights</Filter>
-    </ClCompile>
-    <ClCompile Include="PointLight.cpp">
-      <Filter>Lights</Filter>
-    </ClCompile>
-    <ClCompile Include="SpotLight.cpp">
-      <Filter>Lights</Filter>
+    <ClCompile Include="GeometryNode.cpp">
+      <Filter>Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -123,6 +117,15 @@
     <ClInclude Include="SpotLight.h">
       <Filter>Lights</Filter>
     </ClInclude>
+    <ClInclude Include="SceneNode.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="GroupNode.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="GeometryNode.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GLAD">
@@ -140,5 +143,11 @@
     <Filter Include="Lights">
       <UniqueIdentifier>{d770188f-1400-4b33-bb0b-6e92964447ff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{e41e75f5-689d-461d-9657-05f3ae2bd763}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cpp.hint" />
   </ItemGroup>
 </Project>

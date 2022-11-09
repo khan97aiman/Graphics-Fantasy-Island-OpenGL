@@ -13,6 +13,5 @@ public:
 protected:
 	SceneNode* parent = NULL;
 	std::string name;
-	Shader* shader; //??? here???
 }; 
 

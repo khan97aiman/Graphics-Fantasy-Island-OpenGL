@@ -1,4 +1,5 @@
 #include "GeometryNode.h"
 
-void GeometryNode::Draw() {
+void GeometryNode::Render() {
+	mesh->Draw();
 }

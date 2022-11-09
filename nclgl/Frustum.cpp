@@ -9,11 +9,11 @@ void Frustum::BuildFustrum(const Matrix4& mvp) {
     planes[LEFT] = Plane(waxis + xaxis, (mvp.values[15] + mvp.values[12]), true);
     planes[BOTTOM] = Plane(waxis + yaxis, (mvp.values[15] + mvp.values[13]), true);
     planes[TOP] = Plane(waxis - yaxis, (mvp.values[15] - mvp.values[13]), true);
-    planes[NEAR] = Plane(waxis + zaxis, (mvp.values[15] + mvp.values[14]), true);
-    planes[FAR] = Plane(waxis - zaxis, (mvp.values[15] - mvp.values[14]), true);
+    planes[zNEAR] = Plane(waxis + zaxis, (mvp.values[15] + mvp.values[14]), true);
+    planes[zFAR] = Plane(waxis - zaxis, (mvp.values[15] - mvp.values[14]), true);
 }
 
-bool Frustum::IsInsideFrustum(SceneNode& n) {
+bool Frustum::IsInsideFrustum(GeometryNode& n) {
     for (int p = 0; p < 6; ++p) {
         if (!planes[p].IsSphereInPlane(n.GetWorldTransform().
             GetPositionVector(), n.GetBoundingRadius())) {

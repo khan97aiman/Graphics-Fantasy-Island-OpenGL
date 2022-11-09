@@ -1,5 +1,6 @@
 #pragma once
 #include "../NCLGL/OGLRenderer.h"
+#include "Scene.h"
 
 class Renderer : public OGLRenderer	{
 public:
@@ -8,6 +9,7 @@ public:
 	 void RenderScene()				override;
 	 void UpdateScene(float msec)	override;
 protected:
-	Mesh*	triangle;
-	Shader* basicShader;
+	Scene* scene;
+	std::vector<Shader*> shaders;
+
 };

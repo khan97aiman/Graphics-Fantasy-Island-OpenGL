@@ -14,10 +14,10 @@ void Camera::Update(float dt) {
 }
 
 void Camera::Render() {
-	if (shader) {
+	/*if (shader) {
 		glUniformMatrix4fv(glGetUniformLocation(shader->GetProgram(), "viewMatrix"), 1, false, viewMatrix.values);
 		glUniformMatrix4fv(glGetUniformLocation(shader->GetProgram(), "projMatrix"), 1, false, projectionMatrix.values);
-	}
+	}*/
 }
 
 void Camera::BuildViewMatrix() {

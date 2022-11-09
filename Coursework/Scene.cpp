@@ -17,11 +17,11 @@ Scene::Scene(int width, int height) {
 	}
 	shaders.push_back(basicShader2);
 
-	world = new GroupNode("World");
+	//world = new GroupNode("World");
 
 	SceneNode* camera = new PerspectiveCamera(0.0f, 0.0f, Vector3(0.0f, 0.0f, 0.0f), 1.0f, 10000.0f, (float)width / (float)height, 45.0f);
 	
-	world->AddChild(camera);
+	AddChild(camera);
 
 
 	Vector3 tempPos1 = Vector3(0, 0, -1500.0f);
@@ -31,14 +31,13 @@ Scene::Scene(int width, int height) {
 	float rotation = 0.0f;
 
 	SceneNode* triangleGeometry1 = new GeometryNode("Triangle1", Matrix4(), Matrix4::Translation(tempPos1)* Matrix4::Rotation(rotation, Vector3(0, 1, 0))* Matrix4::Scale(Vector3(scale, scale, scale)) , geometries[0], basicShader1);
-	world->AddChild(triangleGeometry1);
+	AddChild(triangleGeometry1);
 
 	SceneNode* triangleGeometry2 = new GeometryNode("Triangle2", Matrix4(), Matrix4::Translation(tempPos2)* Matrix4::Rotation(rotation, Vector3(0, 1, 0))* Matrix4::Scale(Vector3(scale, scale, scale)) , geometries[0], basicShader2);
-	world->AddChild(triangleGeometry2);
+	AddChild(triangleGeometry2);
 }
 
 Scene::~Scene() {
-	delete world;
 	for (const auto& i : geometries) {
 		delete i;
 	}
@@ -51,12 +50,28 @@ Scene::~Scene() {
 }
 
 void Scene::Render() {
-	world->Render();
+	for (auto const& i : children) {
+		if (i->GetNodeType() == GEOMETRY) {
+			BindShader(dynamic_cast<GeometryNode*>(i)->GetShader());
+			glUniformMatrix4fv(glGetUniformLocation(currentShader->GetProgram(), "modelMatrix"), 1, false, dynamic_cast<GeometryNode*>(i)->GetModelMatrix().values);
+			for (auto const& i : children) {
+				if (i->GetNodeType() == CAMERA) {
+					glUniformMatrix4fv(glGetUniformLocation(currentShader->GetProgram(), "viewMatrix"), 1, false, dynamic_cast<Camera*>(i)->GetViewMatrix().values);
+					glUniformMatrix4fv(glGetUniformLocation(currentShader->GetProgram(), "projMatrix"), 1, false, dynamic_cast<Camera*>(i)->GetProjectionMatrix().values);
+
+				}
+			}
+			dynamic_cast<GeometryNode*>(i)->Render();
+		}
+	}
 }
 
 void Scene::Update(float dt) {
 	//call update of all nodes
-	world->Update(dt);
+	//world->Update(dt);
+	for (auto const& i : children) {
+		i->Update(dt);
+	}
 }
 
 //write shaders first, display only 1 triangle with camera and lights

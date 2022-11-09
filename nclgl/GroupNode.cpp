@@ -51,7 +51,8 @@ void GroupNode::Render() {
 }
 
 void GroupNode::Update(float dt) {
-	for (auto const& i : children) {
+	/*for (auto const& i : children) {
 		i->Update(dt);
-	}
+	}*/
+	// what to do here?
 }

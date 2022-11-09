@@ -10,7 +10,7 @@ public:
 	void Update(float dt);
 	//virtual NodeType GetNodeType() { return GROUP; }
 protected:
-	GroupNode* world;
+	//GroupNode* world;
 	std::vector<Mesh*> geometries; //change to Geometry type
 	std::vector<GLuint> textures;
 	std::vector<Shader*> shaders;

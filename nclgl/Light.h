@@ -20,8 +20,9 @@ public:
 		this->specular = specular;
 		this->colour = colour;
 	}
-	void Render() {}
 	void Update(float dt) {}
+	NodeType GetNodeType() { return LIGHT; }
+
 protected:
 	float ambient = 1.0f;
 	float diffuse = 1.0f;

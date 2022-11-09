@@ -10,7 +10,7 @@ Renderer::~Renderer(void)	{
 }
 
 void Renderer::UpdateScene(float dt) {
-
+	scene->Update(dt);
 }
 
 void Renderer::RenderScene()	{

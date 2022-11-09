@@ -2,12 +2,13 @@
 #include <nclgl/GroupNode.h>
 #include <nclgl/Mesh.h>
 
-class Scene : public SceneNode {
+class Scene : public GroupNode {
 public:
 	Scene();
 	~Scene();
 	void Render();
 	void Update(float dt);
+	//virtual NodeType GetNodeType() { return GROUP; }
 protected:
 	GroupNode* world;
 	std::vector<Mesh*> geometries; //change to Geometry type

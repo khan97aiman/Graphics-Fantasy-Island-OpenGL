@@ -9,6 +9,7 @@ public:
 		this->zfar = zfar;
 		this->aspect = aspect;
 		this->fov = fov;
+		BuildProjectionMatrix();
 	};
 	virtual ~PerspectiveCamera(void) {};
 	virtual void BuildProjectionMatrix() { projectionMatrix = Matrix4::Perspective(znear, zfar, aspect, fov); }

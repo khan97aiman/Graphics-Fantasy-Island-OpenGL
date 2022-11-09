@@ -11,6 +11,7 @@ public:
 		this->left = left;
 		this->top = top;
 		this->bottom = bottom;
+		BuildProjectionMatrix();
 	};
 	virtual ~OrthographicCamera(void) {};
 	virtual void BuildProjectionMatrix() { projectionMatrix = Matrix4::Orthographic(znear, zfar, right, left, top, bottom); }

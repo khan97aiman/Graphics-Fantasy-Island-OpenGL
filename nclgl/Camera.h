@@ -12,6 +12,11 @@ public:
 	void Render();
 	void BuildViewMatrix();
 	virtual void BuildProjectionMatrix() = 0;
+	NodeType GetNodeType() { return CAMERA; }
+	Matrix4 GetViewMatrix() { return viewMatrix; }
+	Matrix4 GetProjectionMatrix() { return projectionMatrix; }
+
+
 protected:
 	void UpdateCameraFromUserInput(float dt);
 

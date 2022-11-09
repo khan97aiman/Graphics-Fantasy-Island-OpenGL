@@ -7,10 +7,17 @@ Camera::Camera(float pitch, float yaw, Vector3 position) {
 	this->position = position;
 }
 
-void Camera::UpdateCamera(float dt) {
+void Camera::Update(float dt) {
 	UpdateCameraFromUserInput(dt);
 	BuildViewMatrix();
 	frameFrustum.BuildFustrum(projectionMatrix * viewMatrix);
+}
+
+void Camera::Render() {
+	if (shader) {
+		glUniformMatrix4fv(glGetUniformLocation(shader->GetProgram(), "viewMatrix"), 1, false, viewMatrix.values);
+		glUniformMatrix4fv(glGetUniformLocation(shader->GetProgram(), "projMatrix"), 1, false, projectionMatrix.values);
+	}
 }
 
 void Camera::BuildViewMatrix() {

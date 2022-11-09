@@ -16,7 +16,6 @@ public:
 protected:
 	Geometry* geometry = NULL;
 	Vector3 modelScale = Vector3(1, 1, 1);
-	Shader* shader;
 	Matrix4 modelMatrix;
 	float distanceFromCamera = 0.0f;
 	float boundingRadius = 1.0f;

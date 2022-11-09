@@ -20,6 +20,8 @@ public:
 		this->specular = specular;
 		this->colour = colour;
 	}
+	void Render() {}
+	void Update(float dt) {}
 protected:
 	float ambient = 1.0f;
 	float diffuse = 1.0f;

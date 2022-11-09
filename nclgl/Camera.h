@@ -1,7 +1,9 @@
 #pragma once
 #include "Matrix4.h"
 #include "Frustum.h"
-class Camera {
+#include "SceneNode.h"
+
+class Camera : public SceneNode {
 public:
 	Camera() = default;
 	Camera(float pitch, float yaw, Vector3 position);

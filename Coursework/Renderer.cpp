@@ -2,7 +2,9 @@
 
 Renderer::Renderer(Window &parent) : OGLRenderer(parent)	{
 	scene = new Scene(width, height);
-
+	if (scene->GetBuildStatus() == FAILED) {
+		return;
+	}
 	init = true;
 }
 Renderer::~Renderer(void)	{

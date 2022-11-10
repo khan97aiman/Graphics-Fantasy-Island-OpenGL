@@ -2,6 +2,11 @@
 #include <nclgl/GroupNode.h>
 #include <nclgl/Mesh.h>
 
+enum Build {
+	FAILED,
+	SUCCESS
+};
+
 class Scene : public GroupNode {
 public:
 	Scene(int width, int height);
@@ -9,11 +14,20 @@ public:
 	void BindShader(Shader* s);
 	void Render();
 	void Update(float dt);
+	void LoadShaders();
+	void LoadGeometries();
+	void LoadTextures();
+	void AddLights();
+	void AddCamera();
+	void AddObjects();
+	int GetBuildStatus() { return buildStatus; }
 protected:
-	std::vector<Mesh*> geometries;	//change to Geometry type
+	std::vector<Mesh*> geometries;	// change to Geometry type
 	std::vector<GLuint> textures;
 	std::vector<Shader*> shaders;
-	Shader* currentShader = 0;		//0 is the 'null' object name for shader programs...
-
+	Shader* currentShader = 0;		// 0 is the 'null' object name for shader programs...
+	int width;						// rendering width required for aspect ratio of camera
+	int height;						// rendering height required for aspect ratio of camera
+	Build buildStatus = FAILED;
 };
 

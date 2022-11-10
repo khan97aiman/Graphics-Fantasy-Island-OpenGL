@@ -40,6 +40,7 @@ public:
 
 	Vector3 ToEuler() const;
 
+	Matrix3 Inverse() const;
 	inline Matrix3 Absolute() const {
 		Matrix3 m;
 

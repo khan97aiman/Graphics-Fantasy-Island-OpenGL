@@ -10,7 +10,7 @@ enum Build {
 class Scene : public GroupNode {
 public:
 	Scene(int width, int height);
-	~Scene();
+	virtual ~Scene();
 	void BindShader(Shader* s);
 	void Render();
 	void Update(float dt);

@@ -307,7 +307,6 @@ void Mesh::GenerateNormals() {
 }
 
 bool Mesh::GetVertexIndicesForTri(unsigned int i, unsigned int& a, unsigned int& b, unsigned int& c) const {
-	unsigned int& a, unsigned int& b, unsigned int& c) const {
 	unsigned int triCount = GetTriCount();
 	if (i >= triCount) {
 		return false;

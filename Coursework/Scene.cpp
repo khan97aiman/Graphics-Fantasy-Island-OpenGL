@@ -25,9 +25,7 @@ Scene::~Scene() {
 	for (const auto& i : textures) {
 		glDeleteTextures(1, &i);
 	}
-	for (auto const& i : children) {
-		delete i;
-	}
+	// no need to delete children here, group node's destructor will handle it
 }
 
 void Scene::BindShader(Shader* s) {
@@ -41,6 +39,7 @@ void Scene::Render() {
 		if (i->GetNodeType() == GEOMETRY) {
 			BindShader(dynamic_cast<GeometryNode*>(i)->GetShader());
 			glUniformMatrix4fv(glGetUniformLocation(currentShader->GetProgram(), "modelMatrix"), 1, false, dynamic_cast<GeometryNode*>(i)->GetModelMatrix().values);
+			glUniformMatrix4fv(glGetUniformLocation(currentShader->GetProgram(), "normalMatrix"), 1, false, dynamic_cast<GeometryNode*>(i)->GetNormalMatrix().values);
 			for (auto const& i : children) {
 				if (i->GetNodeType() == CAMERA) {
 					glUniformMatrix4fv(glGetUniformLocation(currentShader->GetProgram(), "viewMatrix"), 1, false, dynamic_cast<Camera*>(i)->GetViewMatrix().values);

@@ -26,13 +26,13 @@ Matrix3::Matrix3(float elements[9]) {
 	values[1] = elements[1];
 	values[2] = elements[2];
 
-	values[3] = elements[4];
-	values[4] = elements[5];
-	values[5] = elements[6];
+	values[3] = elements[3];
+	values[4] = elements[4];
+	values[5] = elements[5];
 
-	values[6] = elements[8];
-	values[7] = elements[9];
-	values[8] = elements[10];
+	values[6] = elements[6];
+	values[7] = elements[7];
+	values[8] = elements[8];
 }
 
 Matrix3::Matrix3(const Matrix4 &m4) {
@@ -175,6 +175,29 @@ Vector3 Matrix3::ToEuler() const {
 
 		return Vector3(RadToDeg(psi), RadToDeg(theta), RadToDeg(phi));
 	}
+}
+
+Matrix3 Matrix3::Inverse() const {
+	Matrix3 inverse;
+	// computes the inverse of a matrix m
+	double det = values[0] * (values[4] * values[8] - values[7] * values[5]) -
+		values[1] * (values[3] * values[8] - values[5] * values[6]) +
+		values[2] * (values[3] * values[7] - values[4] * values[6]);
+
+
+	double invdet = 1 / det;
+
+	inverse.values[0] = (values[4] * values[8] - values[7] * values[5]) * invdet;
+	inverse.values[1] = (values[2] * values[7] - values[1] * values[8]) * invdet;
+	inverse.values[2] = (values[1] * values[5] - values[2] * values[4]) * invdet;
+	inverse.values[3] = (values[5] * values[6] - values[3] * values[8]) * invdet;
+	inverse.values[4] = (values[0] * values[8] - values[2] * values[6]) * invdet;
+	inverse.values[5] = (values[3] * values[2] - values[0] * values[5]) * invdet;
+	inverse.values[6] = (values[3] * values[7] - values[6] * values[4]) * invdet;
+	inverse.values[7] = (values[6] * values[1] - values[0] * values[7]) * invdet;
+	inverse.values[8] = (values[0] * values[4] - values[3] * values[1]) * invdet;
+
+	return inverse;
 }
 
 Matrix3 Matrix3::FromEuler(const Vector3 &euler) {

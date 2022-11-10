@@ -77,8 +77,7 @@ void Scene::LoadTextures() {
 }
 
 void Scene::AddCamera() {
-	SceneNode* camera = new PerspectiveCamera(0.0f, 0.0f, Vector3(0.0f, 0.0f, 0.0f), 1.0f, 10000.0f, (float)width / (float)height, 45.0f);
-	AddChild(camera);
+	AddChild(new PerspectiveCamera(0.0f, 0.0f, Vector3(0.0f, 0.0f, 0.0f), 1.0f, 10000.0f, (float)width / (float)height, 45.0f));
 }
 
 void Scene::AddLights() {
@@ -91,9 +90,9 @@ void Scene::AddObjects() {
 	float scale = 100.0f;
 	float rotation = 0.0f;
 
-	SceneNode* triangleGeometry1 = new GeometryNode("Triangle1", Matrix4::Translation(tempPos1) * Matrix4::Rotation(rotation, Vector3(0, 1, 0)) * Matrix4::Scale(Vector3(scale, scale, scale)), geometries[0], shaders[0]);
+	GeometryNode* triangleGeometry1 = new GeometryNode("Triangle1", Matrix4::Translation(tempPos1) * Matrix4::Rotation(rotation, Vector3(0, 1, 0)) * Matrix4::Scale(Vector3(scale, scale, scale)), geometries[0], shaders[0]);
 	AddChild(triangleGeometry1);
 
-	SceneNode* triangleGeometry2 = new GeometryNode("Triangle2", Matrix4::Translation(tempPos2) * Matrix4::Rotation(rotation, Vector3(0, 1, 0)) * Matrix4::Scale(Vector3(scale, scale, scale)), geometries[0], shaders[1]);
+	GeometryNode* triangleGeometry2 = new GeometryNode("Triangle2", Matrix4::Translation(tempPos2) * Matrix4::Rotation(rotation, Vector3(0, 1, 0)) * Matrix4::Scale(Vector3(scale, scale, scale)), geometries[0], shaders[1]);
 	AddChild(triangleGeometry2);
 }

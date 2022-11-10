@@ -25,7 +25,9 @@ Scene::~Scene() {
 	for (const auto& i : textures) {
 		glDeleteTextures(1, &i);
 	}
-	//glDeleteTextures(textures.size(), textures.);
+	for (auto const& i : children) {
+		delete i;
+	}
 }
 
 void Scene::BindShader(Shader* s) {

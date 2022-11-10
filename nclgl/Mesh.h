@@ -52,6 +52,9 @@ public:
 	void Draw();
 	void DrawSubMesh(int i);
 
+	void GenerateNormals();
+	bool GetVertexIndicesForTri(unsigned int i, unsigned int& a, unsigned int& b, unsigned int& c) const;
+
 	static Mesh* LoadFromMeshFile(const std::string& name);
 
 	unsigned int GetTriCount() const {

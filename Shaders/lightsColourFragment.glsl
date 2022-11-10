@@ -48,7 +48,7 @@ in Vertex {
 
 out vec4 fragColour;
 
-void CalcLight(in Light light, in float diff, in float spec, out vec3 ambient, vec3 diffuse, vec3 specular) {
+void CalcLight(in Light light, in float diff, in float spec, out vec3 ambient, out vec3 diffuse, out vec3 specular) {
     ambient  = light.ambient ;//* vec3(texture(material.diffuse, TexCoords));
     diffuse  = light.diffuse * diff;// * vec3(texture(material.diffuse, TexCoords));
     specular = light.specular * spec;// * vec3(texture(material.specular, TexCoords));

@@ -18,11 +18,12 @@ out Vertex {
 } OUT ;
 
 void main ( void ) {
-	mat4 mvp = projMatrix * viewMatrix * modelMatrix ;
-	gl_Position = mvp * vec4 ( position , 1.0);
+	vec4 worldPos = (modelMatrix * vec4(position, 1.0));
+	OUT.worldPos = worldPos.xyz;
 	
 	OUT.colour = colour;
 	OUT.texCoord = texCoord;
-	OUT.normal = normalize(normalMatrix * normalize(normal))
-	OUT.worldPos = gl_Position.xyz;
+	OUT.normal = normalize(normalMatrix * normalize(normal));
+
+	gl_Position = (projMatrix * viewMatrix) * worldPos;
 }

@@ -38,6 +38,7 @@ uniform DirectionalLight directionalLights[MAX_LIGHTS];
 uniform SpotLight spotLights[MAX_LIGHTS];
 uniform PointLight pointLights[MAX_LIGHTS];
 uniform vec3 cameraPos;
+uniform sampler2D diffuseTex;
 
 in Vertex {
 	vec4 colour;
@@ -49,9 +50,9 @@ in Vertex {
 out vec4 fragColour;
 
 void CalcLight(in Light light, in float diff, in float spec, out vec3 ambient, out vec3 diffuse, out vec3 specular) {
-    ambient  = light.ambient ;//* vec3(texture(material.diffuse, TexCoords));
-    diffuse  = light.diffuse * diff;// * vec3(texture(material.diffuse, TexCoords));
-    specular = light.specular * spec;// * vec3(texture(material.specular, TexCoords));
+    ambient  = light.ambient * vec3(texture(diffuseTex , IN.texCoord ));//* vec3(texture(material.diffuse, TexCoords));
+    diffuse  = light.diffuse * diff * vec3(texture(diffuseTex , IN.texCoord ));// * vec3(texture(material.diffuse, TexCoords));
+    specular = light.specular * spec * vec3(texture(diffuseTex , IN.texCoord )) ;// * vec3(texture(material.specular, TexCoords));
 }
 
 

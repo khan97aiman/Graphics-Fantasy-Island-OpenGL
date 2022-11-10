@@ -8,28 +8,20 @@ class Geometry; //change all Mesh types to Geometry
 class GeometryNode : public GroupNode {
 public:
 	GeometryNode() = default;
+	GeometryNode(std::string name) : GroupNode(name) {}
 	GeometryNode(std::string name, Mesh* mesh) : GroupNode(name), mesh(mesh) {}
 	GeometryNode(std::string name, Matrix4 transform, Mesh* mesh, Shader* s) : GroupNode(name, transform), mesh(mesh), shader(s) {}
-	void SetModelScale(Vector3 s) { modelScale = s; }
-	void SetColour(Vector4 c) { colour = c; }
-	void SetTexture(GLuint tex) { texture = tex; }
+	void SetModelScale(Vector3 s) { this->modelScale = s; }
+	void SetColour(Vector4 c) { this->colour = c; }
+	void SetTexture(GLuint tex) { this->texture = tex; }
+	void SetShader(Shader* shader) { this->shader = shader; }
+	void SetGeometry(Mesh* mesh) { this->mesh = mesh; }
 	float GetBoundingRadius() const { return boundingRadius; }
-	virtual void Update(float dt) {
-		UpdateWorldTransform();
-		modelMatrix = worldTransform * Matrix4::Scale(modelScale);
-		//modelMatrix = transform;
-	};
 	Matrix4 GetModelMatrix() { return modelMatrix; }
-	virtual void Render();
-	void SetShader(Shader* shader) {
-		this->shader = shader;
-	}
 	Shader* GetShader() { return shader; }
 	virtual NodeType GetNodeType() { return GEOMETRY; }
-
-	//void BindShader() {
-	//	glUseProgram(shader->GetProgram());
-	//}
+	virtual void Render();
+	virtual void Update(float dt);	
 protected:
 	Mesh* mesh = NULL;
 	Vector3 modelScale = Vector3(1, 1, 1);
@@ -38,7 +30,7 @@ protected:
 	float boundingRadius = 1.0f;
 	GLuint texture = 0; 
 	Vector4 colour = Vector4(1, 1, 1, 1);
-	Shader* shader = 0;	//0 is the 'null' object name for shader programs...
+	Shader* shader = 0;						//0 is the 'null' object name for shader programs...
 
 };
 

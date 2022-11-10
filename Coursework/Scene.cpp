@@ -17,8 +17,6 @@ Scene::Scene(int width, int height) {
 	}
 	shaders.push_back(basicShader2);
 
-	//world = new GroupNode("World");
-
 	SceneNode* camera = new PerspectiveCamera(0.0f, 0.0f, Vector3(0.0f, 0.0f, 0.0f), 1.0f, 10000.0f, (float)width / (float)height, 45.0f);
 	
 	AddChild(camera);
@@ -30,10 +28,10 @@ Scene::Scene(int width, int height) {
 	float scale = 100.0f;
 	float rotation = 0.0f;
 
-	SceneNode* triangleGeometry1 = new GeometryNode("Triangle1", Matrix4(), Matrix4::Translation(tempPos1)* Matrix4::Rotation(rotation, Vector3(0, 1, 0))* Matrix4::Scale(Vector3(scale, scale, scale)) , geometries[0], basicShader1);
+	SceneNode* triangleGeometry1 = new GeometryNode("Triangle1", Matrix4::Translation(tempPos1)* Matrix4::Rotation(rotation, Vector3(0, 1, 0))* Matrix4::Scale(Vector3(scale, scale, scale)) , geometries[0], basicShader1);
 	AddChild(triangleGeometry1);
 
-	SceneNode* triangleGeometry2 = new GeometryNode("Triangle2", Matrix4(), Matrix4::Translation(tempPos2)* Matrix4::Rotation(rotation, Vector3(0, 1, 0))* Matrix4::Scale(Vector3(scale, scale, scale)) , geometries[0], basicShader2);
+	SceneNode* triangleGeometry2 = new GeometryNode("Triangle2", Matrix4::Translation(tempPos2)* Matrix4::Rotation(rotation, Vector3(0, 1, 0))* Matrix4::Scale(Vector3(scale, scale, scale)) , geometries[0], basicShader2);
 	AddChild(triangleGeometry2);
 }
 
@@ -67,19 +65,13 @@ void Scene::Render() {
 
 				}
 			}
-			dynamic_cast<GeometryNode*>(i)->Render();
 		}
+		i->Render();
 	}
 }
 
 void Scene::Update(float dt) {
-	//call update of all nodes
-	//world->Update(dt);
 	for (auto const& i : children) {
 		i->Update(dt);
 	}
 }
-
-//write shaders first, display only 1 triangle with camera and lights
-//complete render and draw funcs
-//complete renderer class

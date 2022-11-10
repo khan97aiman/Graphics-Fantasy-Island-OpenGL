@@ -9,7 +9,7 @@ class GeometryNode : public GroupNode {
 public:
 	GeometryNode() = default;
 	GeometryNode(std::string name, Mesh* mesh) : GroupNode(name), mesh(mesh) {}
-	GeometryNode(std::string name, Matrix4 worldTransform, Matrix4 transform, Mesh* mesh, Shader* s) : GroupNode(name, worldTransform, transform), mesh(mesh), shader(s) {}
+	GeometryNode(std::string name, Matrix4 transform, Mesh* mesh, Shader* s) : GroupNode(name, transform), mesh(mesh), shader(s) {}
 	void SetModelScale(Vector3 s) { modelScale = s; }
 	void SetColour(Vector4 c) { colour = c; }
 	void SetTexture(GLuint tex) { texture = tex; }

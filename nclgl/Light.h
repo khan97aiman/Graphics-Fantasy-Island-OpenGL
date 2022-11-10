@@ -21,6 +21,8 @@ public:
 		this->colour = colour;
 	}
 	void Update(float dt) {}
+	void Render() {}
+
 	NodeType GetNodeType() { return LIGHT; }
 
 protected:

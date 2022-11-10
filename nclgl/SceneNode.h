@@ -16,6 +16,7 @@ public:
 	virtual ~SceneNode() {}
 	void SetParent(SceneNode* parent) { this->parent = parent; }
 	virtual void Update(float dt) = 0;
+	virtual void Render() = 0;
 	virtual NodeType GetNodeType() = 0;
 protected:
 	SceneNode* parent = NULL;

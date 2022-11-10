@@ -15,8 +15,9 @@ public:
 	void SetTexture(GLuint tex) { texture = tex; }
 	float GetBoundingRadius() const { return boundingRadius; }
 	virtual void Update(float dt) {
-		//modelMatrix = worldTransform * transform * Matrix4::Scale(modelScale);
-		modelMatrix = transform;
+		UpdateWorldTransform();
+		modelMatrix = worldTransform * Matrix4::Scale(modelScale);
+		//modelMatrix = transform;
 	};
 	Matrix4 GetModelMatrix() { return modelMatrix; }
 	virtual void Render();

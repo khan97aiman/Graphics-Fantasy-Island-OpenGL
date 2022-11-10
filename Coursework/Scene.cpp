@@ -50,6 +50,7 @@ void Scene::Render() {
 }
 
 void Scene::Update(float dt) {
+	UpdateWorldTransform();
 	for (auto const& i : children) {
 		i->Update(dt);
 	}

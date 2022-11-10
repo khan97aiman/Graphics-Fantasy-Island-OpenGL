@@ -26,6 +26,7 @@
     <ClCompile Include="GameTimer.cpp" />
     <ClCompile Include="GeometryNode.cpp" />
     <ClCompile Include="GroupNode.cpp" />
+    <ClCompile Include="HeightMap.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Matrix2.cpp" />
     <ClCompile Include="Matrix3.cpp" />
@@ -49,6 +50,7 @@
     <ClInclude Include="GameTimer.h" />
     <ClInclude Include="GeometryNode.h" />
     <ClInclude Include="GroupNode.h" />
+    <ClInclude Include="HeightMap.h" />
     <ClInclude Include="InputDevice.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="Light.h" />

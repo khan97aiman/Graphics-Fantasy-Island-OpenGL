@@ -2,6 +2,7 @@
 #include <nclgl/PerspectiveCamera.h>
 #include <nclgl/DirectionalLight.h>
 #include <nclgl/GeometryNode.h>
+#include <nclgl/HeightMap.h>
 
 
 Scene::Scene(int width, int height) : width(width), height(height) {
@@ -24,6 +25,7 @@ Scene::~Scene() {
 	for (const auto& i : textures) {
 		glDeleteTextures(1, &i);
 	}
+	//glDeleteTextures(textures.size(), textures.);
 }
 
 void Scene::BindShader(Shader* s) {
@@ -44,6 +46,9 @@ void Scene::Render() {
 
 				}
 			}
+			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "diffuseTex"), 0); //handle texture in geometry class
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, textures[0]);
 		}
 		i->Render();
 	}
@@ -57,42 +62,48 @@ void Scene::Update(float dt) {
 }
 
 void Scene::LoadShaders() {
-	shaders.push_back(new Shader("matrixVertex.glsl", "colourFragment.glsl"));
-	shaders.push_back(new Shader("matrixVertex.glsl", "colourFragmentConstant.glsl"));
+	shaders.push_back(new Shader("texturedVertex.glsl", "texturedFragment.glsl"));
 
 	for (const auto& shader : shaders) {
 		if (!shader->LoadSuccess()) {
 			return;
 		}
 	}
+}
+
+void Scene::LoadGeometries() {
+	geometries.push_back(new HeightMap(TEXTUREDIR"noise1.png"));
+}
+
+void Scene::LoadTextures() {
+	textures.push_back(SOIL_load_OGL_texture(TEXTUREDIR"Barren Reds.JPG", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
+	for (const auto& texture : textures) {
+		if (!texture) {
+			return;
+		}
+		SetTextureRepeating(texture, true);
+	}
 	
 	buildStatus = SUCCESS;
 }
 
-void Scene::LoadGeometries() {
-	geometries.push_back(Mesh::GenerateTriangle());
-}
-
-void Scene::LoadTextures() {
-}
-
 void Scene::AddCamera() {
-	AddChild(new PerspectiveCamera(0.0f, 0.0f, Vector3(0.0f, 0.0f, 0.0f), 1.0f, 10000.0f, (float)width / (float)height, 45.0f));
+	AddChild(new PerspectiveCamera(-40, 270, Vector3(2048, 510, 2048), 1.0f, 10000.0f, (float)width / (float)height, 45.0f));
 }
 
 void Scene::AddLights() {
 }
 
-void Scene::AddObjects() {
-	Vector3 tempPos1 = Vector3(0, 0, -1500.0f);
-	Vector3 tempPos2 = Vector3(-100, -100, -1000.0f);
-
-	float scale = 100.0f;
-	float rotation = 0.0f;
-
-	GeometryNode* triangleGeometry1 = new GeometryNode("Triangle1", Matrix4::Translation(tempPos1) * Matrix4::Rotation(rotation, Vector3(0, 1, 0)) * Matrix4::Scale(Vector3(scale, scale, scale)), geometries[0], shaders[0]);
+void Scene::AddObjects() {	
+	GeometryNode* triangleGeometry1 = new GeometryNode("Terrain", Matrix4(), geometries[0], shaders[0]);
 	AddChild(triangleGeometry1);
+}
 
-	GeometryNode* triangleGeometry2 = new GeometryNode("Triangle2", Matrix4::Translation(tempPos2) * Matrix4::Rotation(rotation, Vector3(0, 1, 0)) * Matrix4::Scale(Vector3(scale, scale, scale)), geometries[0], shaders[1]);
-	AddChild(triangleGeometry2);
+void Scene::SetTextureRepeating(GLuint target, bool repeating) {
+	glBindTexture(GL_TEXTURE_2D, target);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,
+		repeating ? GL_REPEAT : GL_CLAMP);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,
+		repeating ? GL_REPEAT : GL_CLAMP);
+	glBindTexture(GL_TEXTURE_2D, 0);
 }

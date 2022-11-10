@@ -21,6 +21,7 @@ public:
 	void AddCamera();
 	void AddObjects();
 	int GetBuildStatus() { return buildStatus; }
+	void SetTextureRepeating(GLuint target, bool repeating);
 protected:
 	std::vector<Mesh*> geometries;	// change to Geometry type
 	std::vector<GLuint> textures;

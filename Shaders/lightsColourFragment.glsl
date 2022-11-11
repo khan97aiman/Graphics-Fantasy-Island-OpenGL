@@ -3,10 +3,9 @@
 #define MAX_LIGHTS 100 
 
 struct Light {
-    float ambient;
-    float diffuse;
-    float specular;
-    vec3 colour;
+    vec3 ambient;
+    vec3 diffuse;
+    vec3 specular;
 }; 
 
 struct DirectionalLight {

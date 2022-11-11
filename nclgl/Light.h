@@ -14,7 +14,7 @@ public:
 	Light(Vector3 colour) {
 		this->colour = colour;
 	}
-	Light(float ambient, float diffuse, float specular, Vector3 colour) {
+	Light(Vector3 ambient, Vector3 diffuse, Vector3 specular, Vector3 colour) {
 		this->ambient = ambient;
 		this->diffuse = diffuse;
 		this->specular = specular;
@@ -26,9 +26,11 @@ public:
 	virtual NodeType GetNodeType() { return LIGHT; }
 
 public:
-	float ambient = 1.0f;
-	float diffuse = 1.0f;
-	float specular = 1.0f;
+	Vector3 ambient = Vector3(0.5f);		// The ambient light is usually set to a low intensity because we don't want the ambient color to be too dominant.
+	Vector3 diffuse = Vector3(2.0f);		// exact color we want the light to have, value can be more than one, represents intensity
+	Vector3 specular = Vector3(1.0f);	// The specular component is usually kept at vec3(1.0) shining at full intensity.
 	Vector3 colour = Vector3(1.0f, 1.0f, 1.0f);
 };
+
+//remove color, remove different light types in node type, replace public with protected
 

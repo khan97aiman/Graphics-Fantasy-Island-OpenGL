@@ -20,6 +20,12 @@ public:
 		ToZero();
 	}
 
+	Vector3(const float n) {
+		this->x = n;
+		this->y = n;
+		this->z = n;
+	}
+
 	Vector3(const float x, const float y, const float z) {
 		this->x = x;
 		this->y = y;

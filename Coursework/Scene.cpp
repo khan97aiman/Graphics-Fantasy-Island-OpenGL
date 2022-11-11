@@ -49,17 +49,17 @@ void Scene::Render() {
 				}
 			}
 			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "numDirectionalLights"), 0);
-			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "numSpotLights"), 1); //change these numbers to vector size
-			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "numPointLights"), 0);
+			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "numSpotLights"), 0); //change these numbers to vector size
+			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "numPointLights"), 1);
 			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "diffuseTex"), 0); //handle texture in geometry class
 			glActiveTexture(GL_TEXTURE0);
 			glBindTexture(GL_TEXTURE_2D, textures[0]);
 
 			for (int i = 0; i < directionalLights.size(); i++) {
 				glUniform3fv(glGetUniformLocation(currentShader->GetProgram(), "directionalLights[0].direction"), 1, (float*)&dynamic_cast<DirectionalLight*>(directionalLights[i])->direction);
-				glUniform1f(glGetUniformLocation(currentShader->GetProgram(), "directionalLights[0].base.ambient"), dynamic_cast<DirectionalLight*>(directionalLights[i])->ambient);
-				glUniform1f(glGetUniformLocation(currentShader->GetProgram(), "directionalLights[0].base.diffuse"), dynamic_cast<DirectionalLight*>(directionalLights[i])->diffuse);
-				glUniform1f(glGetUniformLocation(currentShader->GetProgram(), "directionalLights[0].base.specular"), dynamic_cast<DirectionalLight*>(directionalLights[i])->specular);
+				glUniform3fv(glGetUniformLocation(currentShader->GetProgram(), "directionalLights[0].base.ambient"), 1, (float*)&dynamic_cast<DirectionalLight*>(directionalLights[i])->ambient);
+				glUniform3fv(glGetUniformLocation(currentShader->GetProgram(), "directionalLights[0].base.diffuse"), 1, (float*)&dynamic_cast<DirectionalLight*>(directionalLights[i])->diffuse);
+				glUniform3fv(glGetUniformLocation(currentShader->GetProgram(), "directionalLights[0].base.specular"), 1, (float*)&dynamic_cast<DirectionalLight*>(directionalLights[i])->specular);
 				glUniform3fv(glGetUniformLocation(currentShader->GetProgram(), "directionalLights[0].base.colour"), 1, (float*)&dynamic_cast<DirectionalLight*>(directionalLights[i])->colour);
 			}
 
@@ -68,9 +68,9 @@ void Scene::Render() {
 				glUniform1f(glGetUniformLocation(currentShader->GetProgram(), "pointLights[0].constant"), dynamic_cast<PointLight*>(pointLights[i])->constant);
 				glUniform1f(glGetUniformLocation(currentShader->GetProgram(), "pointLights[0].linear"), dynamic_cast<PointLight*>(pointLights[i])->linear);
 				glUniform1f(glGetUniformLocation(currentShader->GetProgram(), "pointLights[0].quadratic"), dynamic_cast<PointLight*>(pointLights[i])->quadratic);
-				glUniform1f(glGetUniformLocation(currentShader->GetProgram(), "pointLights[0].base.ambient"), dynamic_cast<PointLight*>(pointLights[i])->ambient);
-				glUniform1f(glGetUniformLocation(currentShader->GetProgram(), "pointLights[0].base.diffuse"), dynamic_cast<PointLight*>(pointLights[i])->diffuse);
-				glUniform1f(glGetUniformLocation(currentShader->GetProgram(), "pointLights[0].base.specular"), dynamic_cast<PointLight*>(pointLights[i])->specular);
+				glUniform3fv(glGetUniformLocation(currentShader->GetProgram(), "pointLights[0].base.ambient"), 1, (float*)&dynamic_cast<PointLight*>(pointLights[i])->ambient);
+				glUniform3fv(glGetUniformLocation(currentShader->GetProgram(), "pointLights[0].base.diffuse"), 1, (float*)&dynamic_cast<PointLight*>(pointLights[i])->diffuse);
+				glUniform3fv(glGetUniformLocation(currentShader->GetProgram(), "pointLights[0].base.specular"), 1, (float*)&dynamic_cast<PointLight*>(pointLights[i])->specular);
 				glUniform3fv(glGetUniformLocation(currentShader->GetProgram(), "pointLights[0].base.colour"), 1, (float*)&dynamic_cast<PointLight*>(pointLights[i])->colour);
 			}
 
@@ -81,9 +81,9 @@ void Scene::Render() {
 				glUniform1f(glGetUniformLocation(currentShader->GetProgram(), "spotLights[0].base.constant"), dynamic_cast<SpotLight*>(spotLights[i])->constant);
 				glUniform1f(glGetUniformLocation(currentShader->GetProgram(), "spotLights[0].base.linear"), dynamic_cast<SpotLight*>(spotLights[i])->linear);
 				glUniform1f(glGetUniformLocation(currentShader->GetProgram(), "spotLights[0].base.quadratic"), dynamic_cast<SpotLight*>(spotLights[i])->quadratic);
-				glUniform1f(glGetUniformLocation(currentShader->GetProgram(), "spotLights[0].base.base.ambient"), dynamic_cast<SpotLight*>(spotLights[i])->ambient);
-				glUniform1f(glGetUniformLocation(currentShader->GetProgram(), "spotLights[0].base.base.diffuse"), dynamic_cast<SpotLight*>(spotLights[i])->diffuse);
-				glUniform1f(glGetUniformLocation(currentShader->GetProgram(), "spotLights[0].base.base.specular"), dynamic_cast<SpotLight*>(spotLights[i])->specular);
+				glUniform3fv(glGetUniformLocation(currentShader->GetProgram(), "spotLights[0].base.base.ambient"), 1, (float*)&dynamic_cast<SpotLight*>(spotLights[i])->ambient);
+				glUniform3fv(glGetUniformLocation(currentShader->GetProgram(), "spotLights[0].base.base.diffuse"), 1, (float*)&dynamic_cast<SpotLight*>(spotLights[i])->diffuse);
+				glUniform3fv(glGetUniformLocation(currentShader->GetProgram(), "spotLights[0].base.base.specular"), 1, (float*)&dynamic_cast<SpotLight*>(spotLights[i])->specular);
 				glUniform3fv(glGetUniformLocation(currentShader->GetProgram(), "spotLights[0].base.base.colour"), 1, (float*)&dynamic_cast<SpotLight*>(spotLights[i])->colour);
 			}
 		}

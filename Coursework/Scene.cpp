@@ -48,8 +48,8 @@ void Scene::Render() {
 
 				}
 			}
-			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "numDirectionalLights"), 1);
-			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "numSpotLights"), 0); //change these numbers to vector size
+			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "numDirectionalLights"), 0);
+			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "numSpotLights"), 1); //change these numbers to vector size
 			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "numPointLights"), 0);
 			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "diffuseTex"), 0); //handle texture in geometry class
 			glActiveTexture(GL_TEXTURE0);
@@ -132,10 +132,10 @@ void Scene::AddLights() {
 	directionalLights.push_back(new DirectionalLight(Vector3(1, -1, 0)));
 	AddChild(directionalLights.back());
 
-	pointLights.push_back(new PointLight(Vector3(2048, 153, 2048)));
+	pointLights.push_back(new PointLight(Vector3(2048, 53, 2048)));
 	AddChild(pointLights.back());
 
-	spotLights.push_back(new SpotLight(Vector3(2048, 153, 2048), Vector3(-1, -1, 0), 45.0f));
+	spotLights.push_back(new SpotLight(Vector3(2048, 53, 2048), Vector3(-1, -1, 0), 45.0f));
 	AddChild(spotLights.back());
 }
 

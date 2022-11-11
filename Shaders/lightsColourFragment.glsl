@@ -65,8 +65,9 @@ vec3 CalcDirectionalLight(DirectionalLight light, vec3 normal, vec3 viewDir)
 
     // specular shading
     vec3 reflectDir = reflect(-lightDir, normal);
+    vec3 halfwayDir = normalize(lightDir + viewDir);
 
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0), 60.0); //IMPORTANT REPLACE 60 with material.shininess
+    float spec = pow(max(dot(normal, halfwayDir), 0.0), 60.0); //IMPORTANT REPLACE 60 with material.shininess
     
     // combine results
     vec3 ambient; vec3 diffuse; vec3 specular;
@@ -83,7 +84,8 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 worldPos, vec3 viewDir)
     
     // specular shading
     vec3 reflectDir = reflect(-lightDir, normal);
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0), 60.0);
+    vec3 halfwayDir = normalize(lightDir + viewDir);
+    float spec = pow(max(dot(normal, halfwayDir), 0.0), 60.0);
     
     // attenuation
     float distance    = length(light.position - worldPos);

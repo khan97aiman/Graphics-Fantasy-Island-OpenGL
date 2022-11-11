@@ -23,9 +23,9 @@ public:
 	void Update(float dt) {}
 	void Render() {}
 
-	NodeType GetNodeType() { return LIGHT; }
+	virtual NodeType GetNodeType() { return LIGHT; }
 
-protected:
+public:
 	float ambient = 1.0f;
 	float diffuse = 1.0f;
 	float specular = 1.0f;

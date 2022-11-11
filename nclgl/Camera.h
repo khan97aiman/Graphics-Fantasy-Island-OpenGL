@@ -15,7 +15,7 @@ public:
 	NodeType GetNodeType() { return CAMERA; }
 	Matrix4 GetViewMatrix() { return viewMatrix; }
 	Matrix4 GetProjectionMatrix() { return projectionMatrix; }
-
+	Vector3 GetPosition() { return position; }
 protected:
 	void UpdateCameraFromUserInput(float dt);
 	float yaw = 0.0f;

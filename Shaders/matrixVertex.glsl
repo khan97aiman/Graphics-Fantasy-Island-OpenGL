@@ -18,7 +18,7 @@ out Vertex {
 } OUT ;
 
 void main ( void ) {
-	vec4 worldPos = (modelMatrix * vec4(position, 1.0));
+	vec4 worldPos = modelMatrix * vec4(position, 1.0);
 	OUT.worldPos = worldPos.xyz;
 	
 	OUT.colour = colour;

@@ -21,10 +21,12 @@ public:
 		this->linear = linear;
 		this->quadratic = quadratic;
 	}
-protected:
+	virtual NodeType GetNodeType() { return POINTLIGHT; }
+
+public:
 	Vector3 position;
 	float constant = 1.0f;		//attenuation unaffected by distance
-	float linear = 0.09f;		//attenuation is inversely proportional to distance
-	float quadratic = 0.032f;	//attenuation is inversely proportional to square of distance
+	float linear = 0.001f;		//attenuation is inversely proportional to distance
+	float quadratic = 0.000001f;	//attenuation is inversely proportional to square of distance
 };
 

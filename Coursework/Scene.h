@@ -1,6 +1,9 @@
 #pragma once
 #include <nclgl/GroupNode.h>
 #include <nclgl/Mesh.h>
+#include <nclgl/DirectionalLight.h>
+#include <nclgl/PointLight.h>
+#include <nclgl/SpotLight.h>
 
 enum Build {
 	FAILED,
@@ -26,6 +29,9 @@ protected:
 	std::vector<Mesh*> geometries;	// change to Geometry type
 	std::vector<GLuint> textures;
 	std::vector<Shader*> shaders;
+	std::vector<DirectionalLight*> directionalLights;
+	std::vector<PointLight*> pointLights;
+	std::vector<SpotLight*> spotLights;
 	Shader* currentShader = 0;		// 0 is the 'null' object name for shader programs...
 	int width;						// rendering width required for aspect ratio of camera
 	int height;						// rendering height required for aspect ratio of camera

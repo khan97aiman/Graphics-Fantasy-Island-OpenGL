@@ -3,9 +3,9 @@
 #define MAX_LIGHTS 100 
 
 struct Light {
-    vec3 ambient;
-    vec3 diffuse;
-    vec3 specular;
+    float ambient;
+    float diffuse;
+    float specular;
     vec3 colour;
 }; 
 
@@ -52,7 +52,7 @@ out vec4 fragColour;
 void CalcLight(in Light light, in float diff, in float spec, out vec3 ambient, out vec3 diffuse, out vec3 specular) {
     ambient  = light.ambient * vec3(texture(diffuseTex , IN.texCoord ));//* vec3(texture(material.diffuse, TexCoords));
     diffuse  = light.diffuse * diff * vec3(texture(diffuseTex , IN.texCoord ));// * vec3(texture(material.diffuse, TexCoords));
-    specular = light.specular * spec * vec3(texture(diffuseTex , IN.texCoord )) ;// * vec3(texture(material.specular, TexCoords));
+    specular = light.specular * spec * vec3(texture(diffuseTex , IN.texCoord ));// * vec3(texture(material.specular, TexCoords));
 }
 
 
@@ -66,7 +66,7 @@ vec3 CalcDirectionalLight(DirectionalLight light, vec3 normal, vec3 viewDir)
     // specular shading
     vec3 reflectDir = reflect(-lightDir, normal);
 
-    float spec = 1;//pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0), 60.0); //IMPORTANT REPLACE 60 with material.shininess
     
     // combine results
     vec3 ambient; vec3 diffuse; vec3 specular;
@@ -83,7 +83,7 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 worldPos, vec3 viewDir)
     
     // specular shading
     vec3 reflectDir = reflect(-lightDir, normal);
-    float spec = 1; //pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0), 60.0);
     
     // attenuation
     float distance    = length(light.position - worldPos);

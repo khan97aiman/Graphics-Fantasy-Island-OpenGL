@@ -4,6 +4,7 @@
 #include <nclgl/DirectionalLight.h>
 #include <nclgl/PointLight.h>
 #include <nclgl/SpotLight.h>
+#include <nclgl/Camera.h>
 
 enum Build {
 	FAILED,
@@ -32,6 +33,7 @@ protected:
 	std::vector<DirectionalLight*> directionalLights;
 	std::vector<PointLight*> pointLights;
 	std::vector<SpotLight*> spotLights;
+	Camera* currentCamera;
 	Shader* currentShader = 0;		// 0 is the 'null' object name for shader programs...
 	int width;						// rendering width required for aspect ratio of camera
 	int height;						// rendering height required for aspect ratio of camera

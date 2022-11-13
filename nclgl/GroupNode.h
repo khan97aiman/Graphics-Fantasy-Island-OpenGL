@@ -18,6 +18,7 @@ public:
 	virtual void Update(float dt);
 	virtual void Render();
 	virtual NodeType GetNodeType() { return GROUP; }
+	virtual void SendDataToShader(Shader* s, int index) {}
 protected:
 	void UpdateWorldTransform();
 	std::vector<SceneNode*> children;

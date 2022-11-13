@@ -13,9 +13,7 @@ public:
 	void BuildViewMatrix();
 	virtual void BuildProjectionMatrix() = 0;
 	NodeType GetNodeType() { return CAMERA; }
-	Matrix4 GetViewMatrix() { return viewMatrix; }
-	Matrix4 GetProjectionMatrix() { return projectionMatrix; }
-	Vector3 GetPosition() { return position; }
+	virtual void SendDataToShader(Shader* s, int index = 0);
 protected:
 	void UpdateCameraFromUserInput(float dt);
 	float yaw = 0.0f;

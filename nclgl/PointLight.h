@@ -14,7 +14,7 @@ public:
 		this->linear = linear;
 		this->quadratic = quadratic;
 	}
-	void SendDataToShader(Shader* s, int index) {
+	virtual void SendDataToShader(Shader* s, int index) {
 		std::string i = std::to_string(index);
 		glUniform3fv(glGetUniformLocation(s->GetProgram(), ("pointLights[" + i + "].position").c_str()), 1, (float*)&position);
 		glUniform1f(glGetUniformLocation(s->GetProgram(), ("pointLights[" + i + "].constant").c_str()), constant);

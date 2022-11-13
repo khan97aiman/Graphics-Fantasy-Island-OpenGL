@@ -19,6 +19,12 @@ void Camera::BuildViewMatrix() {
 		Matrix4::Translation(-position);
 }
 
+void Camera::SendDataToShader(Shader* s, int index) {
+	glUniformMatrix4fv(glGetUniformLocation(s->GetProgram(), "viewMatrix"), 1, false, viewMatrix.values);
+	glUniformMatrix4fv(glGetUniformLocation(s->GetProgram(), "projMatrix"), 1, false, projectionMatrix.values);
+	glUniform3fv(glGetUniformLocation(s->GetProgram(), "cameraPos"), 1, (float*)&position);
+}
+
 void Camera::UpdateCameraFromUserInput(float dt) {
 	pitch -= (Window::GetMouse()->GetRelativePosition().y);
 	yaw -= (Window::GetMouse()->GetRelativePosition().x);

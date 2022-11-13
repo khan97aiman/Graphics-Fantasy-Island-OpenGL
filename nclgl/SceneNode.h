@@ -22,6 +22,7 @@ public:
 	virtual void Update(float dt) = 0;
 	virtual void Render() = 0;
 	virtual NodeType GetNodeType() = 0;
+	virtual void SendDataToShader(Shader* s, int index) = 0;
 protected:
 	GroupNode* parent = NULL;
 	std::string name;

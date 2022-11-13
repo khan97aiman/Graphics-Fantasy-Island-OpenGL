@@ -40,17 +40,16 @@ void Scene::Render() {
 			BindShader(dynamic_cast<GeometryNode*>(i)->GetShader());
 			glUniformMatrix4fv(glGetUniformLocation(currentShader->GetProgram(), "modelMatrix"), 1, false, dynamic_cast<GeometryNode*>(i)->GetModelMatrix().values);
 			glUniformMatrix3fv(glGetUniformLocation(currentShader->GetProgram(), "normalMatrix"), 1, false, dynamic_cast<GeometryNode*>(i)->GetNormalMatrix().values);
-			for (auto const& i : children) {
-				if (i->GetNodeType() == CAMERA) {
-					glUniformMatrix4fv(glGetUniformLocation(currentShader->GetProgram(), "viewMatrix"), 1, false, dynamic_cast<Camera*>(i)->GetViewMatrix().values);
-					glUniformMatrix4fv(glGetUniformLocation(currentShader->GetProgram(), "projMatrix"), 1, false, dynamic_cast<Camera*>(i)->GetProjectionMatrix().values);
-					glUniform3fv(glGetUniformLocation(currentShader->GetProgram(), "cameraPos"), 1, (float*)&dynamic_cast<Camera*>(i)->GetPosition());
+	
+			//Sending Camera Matrices
+			currentCamera->SendDataToShader(currentShader);
 
-				}
-			}
+			//Sending Number of Lights
 			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "numDirectionalLights"), 0);
 			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "numSpotLights"), 0); //change these numbers to vector size
 			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "numPointLights"), 1);
+
+			//Sending Texture Data
 			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "diffuseTex"), 0); //handle texture in geometry class
 			glActiveTexture(GL_TEXTURE0);
 			glBindTexture(GL_TEXTURE_2D, textures[0]);
@@ -111,7 +110,8 @@ void Scene::LoadTextures() {
 }
 
 void Scene::AddCamera() {
-	AddChild(new PerspectiveCamera(-40, 270, Vector3(2048, 510, 2048), 1.0f, 10000.0f, (float)width / (float)height, 45.0f));
+	currentCamera = new PerspectiveCamera(-40, 270, Vector3(2048, 510, 2048), 1.0f, 10000.0f, (float)width / (float)height, 45.0f);
+	AddChild(currentCamera);
 }
 
 void Scene::AddLights() {

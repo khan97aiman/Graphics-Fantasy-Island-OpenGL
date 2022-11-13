@@ -53,13 +53,13 @@ void Scene::Render() {
 			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "numPointLights"), 0);
 
 			//Sending Texture Data
-			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "diffuseTex"), 0); //handle texture in geometry class
+			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "cubeTex"), 0);
 			glActiveTexture(GL_TEXTURE0);
-			glBindTexture(GL_TEXTURE_2D, textures[0]);
+			glBindTexture(GL_TEXTURE_CUBE_MAP, textures[0]);
 
-			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "cubeTex"), 2);
-			glActiveTexture(GL_TEXTURE2);
-			glBindTexture(GL_TEXTURE_CUBE_MAP, textures[1]);
+			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "diffuseTex"), 1); //handle texture in geometry class
+			glActiveTexture(GL_TEXTURE1);
+			glBindTexture(GL_TEXTURE_2D, textures[1]);
 
 			for (int i = 0; i < directionalLights.size(); i++) {
 				directionalLights[i]->SendDataToShader(currentShader, i);
@@ -86,8 +86,8 @@ void Scene::Update(float dt) {
 }
 
 void Scene::LoadShaders() {
-	shaders.push_back(new Shader("matrixVertex.glsl", "lightsColourFragment.glsl"));
 	shaders.push_back(new Shader("skyboxVertex.glsl", "skyboxFragment.glsl"));
+	shaders.push_back(new Shader("matrixVertex.glsl", "lightsColourFragment.glsl"));
 
 	for (const auto& shader : shaders) {
 		if (!shader->LoadSuccess()) {
@@ -97,13 +97,11 @@ void Scene::LoadShaders() {
 }
 
 void Scene::LoadGeometries() {
-	geometries.push_back(new HeightMap(TEXTUREDIR"noise1.png"));
 	geometries.push_back(Mesh::GenerateQuad());
+	geometries.push_back(new HeightMap(TEXTUREDIR"noise1.png"));
 }
 
 void Scene::LoadTextures() {
-	textures.push_back(SOIL_load_OGL_texture(TEXTUREDIR"Barren Reds.JPG", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
-
 	textures.push_back(
 		SOIL_load_OGL_cubemap(
 			TEXTUREDIR"rusted_west.jpg", TEXTUREDIR"rusted_east.jpg",
@@ -112,11 +110,12 @@ void Scene::LoadTextures() {
 			SOIL_LOAD_RGB, SOIL_CREATE_NEW_ID, 0
 		)
 	);
-	for (const auto& texture : textures) {
-		if (!texture) {
+	textures.push_back(SOIL_load_OGL_texture(TEXTUREDIR"Barren Reds.JPG", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
+	for (auto& texture = textures.begin() + 1; texture != textures.end(); ++texture) {
+		if (!*texture) {
 			return;
 		}
-		SetTextureRepeating(texture, true);
+		SetTextureRepeating(*texture, true);
 	}
 	
 	buildStatus = SUCCESS;
@@ -139,10 +138,10 @@ void Scene::AddLights() {
 }
 
 void Scene::AddObjects() {	
-	Skybox* skybox = new Skybox(geometries[1], shaders[1]);
+	Skybox* skybox = new Skybox(geometries[0], shaders[0]);
 	AddChild(skybox);
 
-	Terrain* terrain = new Terrain(geometries[0], shaders[0]);
+	Terrain* terrain = new Terrain(geometries[1], shaders[1]);
 	AddChild(terrain);
 }
 

@@ -105,7 +105,7 @@ void Scene::LoadShaders() {
 
 void Scene::LoadGeometries() {
 	geometries.push_back(Mesh::GenerateQuad());
-	HeightMap* terrainHeightMap = new HeightMap(TEXTUREDIR"noise1.png");
+	HeightMap* terrainHeightMap = new HeightMap(TEXTUREDIR"noise5.jpg");
 	dimensions = terrainHeightMap->GetHeightmapSize();
 	geometries.push_back(terrainHeightMap);
 }

@@ -4,6 +4,7 @@
 #include <nclgl/GeometryNode.h>
 #include <nclgl/HeightMap.h>
 #include "Terrain.h"
+#include "Skybox.h"
 
 
 Scene::Scene(int width, int height) : width(width), height(height) {
@@ -56,6 +57,10 @@ void Scene::Render() {
 			glActiveTexture(GL_TEXTURE0);
 			glBindTexture(GL_TEXTURE_2D, textures[0]);
 
+			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "cubeTex"), 2);
+			glActiveTexture(GL_TEXTURE2);
+			glBindTexture(GL_TEXTURE_CUBE_MAP, textures[1]);
+
 			for (int i = 0; i < directionalLights.size(); i++) {
 				directionalLights[i]->SendDataToShader(currentShader, i);
 			}
@@ -82,6 +87,7 @@ void Scene::Update(float dt) {
 
 void Scene::LoadShaders() {
 	shaders.push_back(new Shader("matrixVertex.glsl", "lightsColourFragment.glsl"));
+	shaders.push_back(new Shader("skyboxVertex.glsl", "skyboxFragment.glsl"));
 
 	for (const auto& shader : shaders) {
 		if (!shader->LoadSuccess()) {
@@ -92,10 +98,20 @@ void Scene::LoadShaders() {
 
 void Scene::LoadGeometries() {
 	geometries.push_back(new HeightMap(TEXTUREDIR"noise1.png"));
+	geometries.push_back(Mesh::GenerateQuad());
 }
 
 void Scene::LoadTextures() {
 	textures.push_back(SOIL_load_OGL_texture(TEXTUREDIR"Barren Reds.JPG", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
+
+	textures.push_back(
+		SOIL_load_OGL_cubemap(
+			TEXTUREDIR"rusted_west.jpg", TEXTUREDIR"rusted_east.jpg",
+			TEXTUREDIR"rusted_up.jpg", TEXTUREDIR"rusted_down.jpg",
+			TEXTUREDIR"rusted_south.jpg", TEXTUREDIR"rusted_north.jpg",
+			SOIL_LOAD_RGB, SOIL_CREATE_NEW_ID, 0
+		)
+	);
 	for (const auto& texture : textures) {
 		if (!texture) {
 			return;
@@ -123,6 +139,9 @@ void Scene::AddLights() {
 }
 
 void Scene::AddObjects() {	
+	Skybox* skybox = new Skybox(geometries[1], shaders[1]);
+	AddChild(skybox);
+
 	Terrain* terrain = new Terrain(geometries[0], shaders[0]);
 	AddChild(terrain);
 }

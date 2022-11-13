@@ -32,5 +32,8 @@
     <ClInclude Include="Terrain.h">
       <Filter>Scene Objects</Filter>
     </ClInclude>
+    <ClInclude Include="Skybox.h">
+      <Filter>Scene Objects</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

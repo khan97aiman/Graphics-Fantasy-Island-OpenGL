@@ -12,6 +12,7 @@ public:
 	GeometryNode() = default;
 	GeometryNode(std::string name) : GroupNode(name) {}
 	GeometryNode(std::string name, Mesh* mesh) : GroupNode(name), mesh(mesh) {}
+	GeometryNode(std::string name, Mesh* mesh, Shader* s) : GroupNode(name), mesh(mesh), shader(s) {}
 	GeometryNode(std::string name, Matrix4 transform, Mesh* mesh, Shader* s) : GroupNode(name, transform), mesh(mesh), shader(s) {}
 	virtual ~GeometryNode() {}
 	void SetModelScale(Vector3 s) { this->modelScale = s; }

@@ -46,6 +46,8 @@ public:
 		int count;
 	};
 	static Mesh* GenerateTriangle();
+	static Mesh* GenerateQuad();
+
 	Mesh(void);
 	~Mesh(void);
 

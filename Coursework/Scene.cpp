@@ -86,6 +86,12 @@ void Scene::Render() {
 				glUniform3fv(glGetUniformLocation(currentShader->GetProgram(), "spotLights[0].base.base.specular"), 1, (float*)&dynamic_cast<SpotLight*>(spotLights[i])->specular);
 				glUniform3fv(glGetUniformLocation(currentShader->GetProgram(), "spotLights[0].base.base.colour"), 1, (float*)&dynamic_cast<SpotLight*>(spotLights[i])->colour);
 			}
+
+			glUniform3fv(glGetUniformLocation(currentShader->GetProgram(), "material.ambient"), 1, (float*)&Vector3(0.24725,0.1995, 0.0745));
+			glUniform3fv(glGetUniformLocation(currentShader->GetProgram(), "material.diffuse"), 1, (float*)&Vector3(0.75164, 0.60648, 0.22648));
+			glUniform3fv(glGetUniformLocation(currentShader->GetProgram(), "material.specular"), 1, (float*)&Vector3(0.628281, 0.555802, 0.366065));
+			glUniform1f(glGetUniformLocation(currentShader->GetProgram(), "material.shininess"), 0.4);
+
 		}
 		i->Render();
 	}
@@ -129,10 +135,10 @@ void Scene::AddCamera() {
 }
 
 void Scene::AddLights() {
-	directionalLights.push_back(new DirectionalLight(Vector3(1, -1, 0)));
+	directionalLights.push_back(new DirectionalLight(Vector3(0, -1, 0)));
 	AddChild(directionalLights.back());
 
-	pointLights.push_back(new PointLight(Vector3(2048, 53, 2048)));
+	pointLights.push_back(new PointLight(Vector3(2048, 153, 2048)));
 	AddChild(pointLights.back());
 
 	spotLights.push_back(new SpotLight(Vector3(2048, 53, 2048), Vector3(-1, -1, 0), 45.0f));

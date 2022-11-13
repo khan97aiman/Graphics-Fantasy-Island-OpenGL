@@ -5,6 +5,7 @@ Renderer::Renderer(Window &parent) : OGLRenderer(parent)	{
 	if (scene->GetBuildStatus() == FAILED) {
 		return;
 	}
+	glEnable(GL_LIGHTING);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

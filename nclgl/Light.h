@@ -27,10 +27,10 @@ public:
 
 public:
 	Vector3 ambient = Vector3(0.5f);		// The ambient light is usually set to a low intensity because we don't want the ambient color to be too dominant.
-	Vector3 diffuse = Vector3(2.0f);		// exact color we want the light to have, value can be more than one, represents intensity
+	Vector3 diffuse = Vector3(1.0f);		// exact color we want the light to have, value can be more than one, represents intensity
 	Vector3 specular = Vector3(1.0f);	// The specular component is usually kept at vec3(1.0) shining at full intensity.
 	Vector3 colour = Vector3(1.0f, 1.0f, 1.0f);
 };
 
-//remove color, remove different light types in node type, replace public with protected
+//remove color, remove different light types in node type, replace public with protected, instead of value > 1 in diffuse, use intensity value
 

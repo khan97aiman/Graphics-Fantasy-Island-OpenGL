@@ -29,6 +29,13 @@ struct SpotLight
     float cutOff;
 };
 
+struct Material {
+    vec3 ambient;
+    vec3 diffuse;
+    vec3 specular;
+    float shininess;
+}; 
+  
 uniform int numDirectionalLights;
 uniform int numSpotLights;
 uniform int numPointLights;
@@ -38,6 +45,7 @@ uniform SpotLight spotLights[MAX_LIGHTS];
 uniform PointLight pointLights[MAX_LIGHTS];
 uniform vec3 cameraPos;
 uniform sampler2D diffuseTex;
+uniform Material material;
 
 in Vertex {
 	vec4 colour;
@@ -49,9 +57,9 @@ in Vertex {
 out vec4 fragColour;
 
 void CalcLight(in Light light, in float diff, in float spec, out vec3 ambient, out vec3 diffuse, out vec3 specular) {
-    ambient  = light.ambient * vec3(texture(diffuseTex , IN.texCoord ));//* vec3(texture(material.diffuse, TexCoords));
-    diffuse  = light.diffuse * diff * vec3(texture(diffuseTex , IN.texCoord ));// * vec3(texture(material.diffuse, TexCoords));
-    specular = light.specular * spec * vec3(texture(diffuseTex , IN.texCoord ));// * vec3(texture(material.specular, TexCoords));
+    ambient  = light.ambient * vec3(texture(diffuseTex , IN.texCoord )) * material.ambient;// * vec3(texture(material.ambient, IN.texCoord));
+    diffuse  = light.diffuse * diff * vec3(texture(diffuseTex , IN.texCoord )) * material.diffuse;// * vec3(texture(material.diffuse, IN.texCoord));
+    specular = light.specular * spec * vec3(texture(diffuseTex , IN.texCoord )) * material.specular;// * vec3(texture(material.specular, IN.texCoord));
 }
 
 
@@ -63,10 +71,10 @@ vec3 CalcDirectionalLight(DirectionalLight light, vec3 normal, vec3 viewDir)
     float diff = max(dot(normal, lightDir), 0.0);
 
     // specular shading
-    vec3 reflectDir = reflect(-lightDir, normal);
+    //vec3 reflectDir = reflect(-lightDir, normal);
     vec3 halfwayDir = normalize(lightDir + viewDir);
 
-    float spec = pow(max(dot(normal, halfwayDir), 0.0), 60.0); //IMPORTANT REPLACE 60 with material.shininess
+    float spec = pow(max(dot(normal, halfwayDir), 0.0), material.shininess); //IMPORTANT REPLACE 60 with material.shininess
     
     // combine results
     vec3 ambient; vec3 diffuse; vec3 specular;
@@ -82,9 +90,9 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 worldPos, vec3 viewDir)
     float diff = max(dot(normal, lightDir), 0.0);
     
     // specular shading
-    vec3 reflectDir = reflect(-lightDir, normal);
+    //vec3 reflectDir = reflect(-lightDir, normal);
     vec3 halfwayDir = normalize(lightDir + viewDir);
-    float spec = pow(max(dot(normal, halfwayDir), 0.0), 60.0);
+    float spec = pow(max(dot(normal, halfwayDir), 0.0), material.shininess);
     
     // attenuation
     float distance    = length(light.position - worldPos);

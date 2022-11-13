@@ -154,8 +154,8 @@ void Scene::AddObjects() {
 	Terrain* terrain = new Terrain(geometries[1], shaders[1]);
 	AddChild(terrain);
 
-	/*Water* water = new Water(geometries[0], shaders[2], Vector3(4096, 255, 4096));
-	AddChild(water);*/
+	Water* water = new Water(geometries[0], shaders[2], dimensions);
+	AddChild(water);
 }
 
 void Scene::SetTextureRepeating(GLuint target, bool repeating) {

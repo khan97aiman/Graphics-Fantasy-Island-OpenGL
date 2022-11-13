@@ -6,9 +6,6 @@ class GroupNode;
 enum NodeType {
 	CAMERA,
 	LIGHT,
-	DIRECTIONAL, //not liking this
-	SPOT,
-	POINTLIGHT,
 	GEOMETRY,
 	GROUP,
 };

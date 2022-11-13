@@ -5,6 +5,7 @@
 #include <nclgl/HeightMap.h>
 #include "Terrain.h"
 #include "Skybox.h"
+#include "Water.h"
 
 
 Scene::Scene(int width, int height) : width(width), height(height) {
@@ -61,6 +62,10 @@ void Scene::Render() {
 			glActiveTexture(GL_TEXTURE1);
 			glBindTexture(GL_TEXTURE_2D, textures[1]);
 
+			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "waterTex"), 2); //handle texture in geometry class
+			glActiveTexture(GL_TEXTURE2);
+			glBindTexture(GL_TEXTURE_2D, textures[2]);
+
 			for (int i = 0; i < directionalLights.size(); i++) {
 				directionalLights[i]->SendDataToShader(currentShader, i);
 			}
@@ -88,6 +93,8 @@ void Scene::Update(float dt) {
 void Scene::LoadShaders() {
 	shaders.push_back(new Shader("skyboxVertex.glsl", "skyboxFragment.glsl"));
 	shaders.push_back(new Shader("matrixVertex.glsl", "lightsColourFragment.glsl"));
+	shaders.push_back(new Shader("reflectVertex.glsl", "reflectFragment.glsl"));
+
 
 	for (const auto& shader : shaders) {
 		if (!shader->LoadSuccess()) {
@@ -111,6 +118,7 @@ void Scene::LoadTextures() {
 		)
 	);
 	textures.push_back(SOIL_load_OGL_texture(TEXTUREDIR"Barren Reds.JPG", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
+	textures.push_back(SOIL_load_OGL_texture(TEXTUREDIR"water.TGA", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
 	for (auto& texture = textures.begin() + 1; texture != textures.end(); ++texture) {
 		if (!*texture) {
 			return;
@@ -122,7 +130,7 @@ void Scene::LoadTextures() {
 }
 
 void Scene::AddCamera() {
-	currentCamera = new PerspectiveCamera(-40, 270, Vector3(2048, 510, 2048), 1.0f, 10000.0f, (float)width / (float)height, 45.0f);
+	currentCamera = new PerspectiveCamera(-45, 0.0f, Vector3(4096, 255, 4096)* Vector3(0.5f, 5.0f, 0.5f), 1.0f, 15000.0f, (float)width / (float)height, 45.0f);
 	AddChild(currentCamera);
 }
 
@@ -143,6 +151,9 @@ void Scene::AddObjects() {
 
 	Terrain* terrain = new Terrain(geometries[1], shaders[1]);
 	AddChild(terrain);
+
+	Water* water = new Water(geometries[0], shaders[2], Vector3(4096, 255, 4096));
+	AddChild(water);
 }
 
 void Scene::SetTextureRepeating(GLuint target, bool repeating) {

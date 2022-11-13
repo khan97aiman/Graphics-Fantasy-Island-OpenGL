@@ -12,7 +12,12 @@ void GeometryNode::SendDataToShader(Shader* s, int index) {
 	glUniformMatrix4fv(glGetUniformLocation(s->GetProgram(), "modelMatrix"), 1, false, modelMatrix.values);
 	glUniformMatrix3fv(glGetUniformLocation(s->GetProgram(), "normalMatrix"), 1, false, normalMatrix.values);
 
-	material.SendDataToShader(s);
+	if (hasTextureMatrix) {
+		glUniformMatrix4fv(glGetUniformLocation(s->GetProgram(), "textureMatrix"), 1, false, textureMatrix.values);
+	}
+	if (hasMaterial) {
+		material.SendDataToShader(s);
+	}
 }
 
 void GeometryNode::Render() {

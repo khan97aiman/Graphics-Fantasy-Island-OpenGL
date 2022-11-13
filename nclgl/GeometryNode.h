@@ -27,11 +27,14 @@ protected:
 	Vector3 modelScale = Vector3(1, 1, 1);
 	Matrix4 modelMatrix;
 	Matrix3 normalMatrix;
+	Matrix3 textureMatrix;
 	float distanceFromCamera = 0.0f;
 	float boundingRadius = 1.0f;
 
 	Material material;
 	Shader* shader = 0;						//0 is the 'null' object name for shader programs...
+	bool hasTextureMatrix = false;
+	bool hasMaterial = false;
 
 };
 

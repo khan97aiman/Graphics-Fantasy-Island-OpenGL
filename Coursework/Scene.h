@@ -38,5 +38,6 @@ protected:
 	int width;						// rendering width required for aspect ratio of camera
 	int height;						// rendering height required for aspect ratio of camera
 	Build buildStatus = FAILED;
+	Vector3 dimensions;
 };
 

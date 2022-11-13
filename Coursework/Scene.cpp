@@ -105,7 +105,9 @@ void Scene::LoadShaders() {
 
 void Scene::LoadGeometries() {
 	geometries.push_back(Mesh::GenerateQuad());
-	geometries.push_back(new HeightMap(TEXTUREDIR"noise1.png"));
+	HeightMap* terrainHeightMap = new HeightMap(TEXTUREDIR"noise1.png");
+	dimensions = terrainHeightMap->GetHeightmapSize();
+	geometries.push_back(terrainHeightMap);
 }
 
 void Scene::LoadTextures() {
@@ -130,7 +132,7 @@ void Scene::LoadTextures() {
 }
 
 void Scene::AddCamera() {
-	currentCamera = new PerspectiveCamera(-45, 0.0f, Vector3(4096, 255, 4096)* Vector3(0.5f, 5.0f, 0.5f), 1.0f, 15000.0f, (float)width / (float)height, 45.0f);
+	currentCamera = new PerspectiveCamera(-45, 0.0f, dimensions * Vector3(0.5f, 5.0f, 0.5f), 1.0f, 15000.0f, (float)width / (float)height, 45.0f);
 	AddChild(currentCamera);
 }
 
@@ -152,8 +154,8 @@ void Scene::AddObjects() {
 	Terrain* terrain = new Terrain(geometries[1], shaders[1]);
 	AddChild(terrain);
 
-	Water* water = new Water(geometries[0], shaders[2], Vector3(4096, 255, 4096));
-	AddChild(water);
+	/*Water* water = new Water(geometries[0], shaders[2], Vector3(4096, 255, 4096));
+	AddChild(water);*/
 }
 
 void Scene::SetTextureRepeating(GLuint target, bool repeating) {

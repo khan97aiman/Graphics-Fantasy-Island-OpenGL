@@ -18,6 +18,9 @@
     <Filter Include="Header Files">
       <UniqueIdentifier>{250e8125-24cf-4423-9a0a-db5076953fa2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scene Objects">
+      <UniqueIdentifier>{0a1146ef-3dfa-4cdd-8ef0-64aad40239bc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Renderer.h">
@@ -25,6 +28,9 @@
     </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Terrain.h">
+      <Filter>Scene Objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

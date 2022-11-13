@@ -3,6 +3,7 @@
 #include <nclgl/DirectionalLight.h>
 #include <nclgl/GeometryNode.h>
 #include <nclgl/HeightMap.h>
+#include "Terrain.h"
 
 
 Scene::Scene(int width, int height) : width(width), height(height) {
@@ -38,16 +39,17 @@ void Scene::Render() {
 	for (auto const& i : children) {
 		if (i->GetNodeType() == GEOMETRY) {
 			BindShader(dynamic_cast<GeometryNode*>(i)->GetShader());
-			glUniformMatrix4fv(glGetUniformLocation(currentShader->GetProgram(), "modelMatrix"), 1, false, dynamic_cast<GeometryNode*>(i)->GetModelMatrix().values);
-			glUniformMatrix3fv(glGetUniformLocation(currentShader->GetProgram(), "normalMatrix"), 1, false, dynamic_cast<GeometryNode*>(i)->GetNormalMatrix().values);
+			
+			//Sending GeometryNodes Data 
+			i->SendDataToShader(currentShader, 0);
 	
 			//Sending Camera Matrices
 			currentCamera->SendDataToShader(currentShader);
 
 			//Sending Number of Lights
-			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "numDirectionalLights"), 0);
+			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "numDirectionalLights"), 1);
 			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "numSpotLights"), 0); //change these numbers to vector size
-			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "numPointLights"), 1);
+			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "numPointLights"), 0);
 
 			//Sending Texture Data
 			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "diffuseTex"), 0); //handle texture in geometry class
@@ -65,11 +67,6 @@ void Scene::Render() {
 			for (int i = 0; i < spotLights.size(); i++) {
 				spotLights[i]->SendDataToShader(currentShader, i);
 			}
-
-			glUniform3fv(glGetUniformLocation(currentShader->GetProgram(), "material.ambient"), 1, (float*)&Vector3(0.24725,0.1995, 0.0745));
-			glUniform3fv(glGetUniformLocation(currentShader->GetProgram(), "material.diffuse"), 1, (float*)&Vector3(0.75164, 0.60648, 0.22648));
-			glUniform3fv(glGetUniformLocation(currentShader->GetProgram(), "material.specular"), 1, (float*)&Vector3(0.628281, 0.555802, 0.366065));
-			glUniform1f(glGetUniformLocation(currentShader->GetProgram(), "material.shininess"), 0.4);
 
 		}
 		i->Render();
@@ -115,7 +112,7 @@ void Scene::AddCamera() {
 }
 
 void Scene::AddLights() {
-	directionalLights.push_back(new DirectionalLight(Vector3(0, -1, 0)));
+	directionalLights.push_back(new DirectionalLight(Vector3(1, -1, 0)));
 	AddChild(directionalLights.back());
 
 	pointLights.push_back(new PointLight(Vector3(2048, 153, 2048)));
@@ -126,8 +123,8 @@ void Scene::AddLights() {
 }
 
 void Scene::AddObjects() {	
-	GeometryNode* triangleGeometry1 = new GeometryNode("Terrain", Matrix4(), geometries[0], shaders[0]);
-	AddChild(triangleGeometry1);
+	Terrain* terrain = new Terrain(geometries[0], shaders[0]);
+	AddChild(terrain);
 }
 
 void Scene::SetTextureRepeating(GLuint target, bool repeating) {

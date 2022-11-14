@@ -92,7 +92,7 @@ void Scene::LoadShaders() {
 
 void Scene::LoadGeometries() {
 	geometries.push_back(Mesh::GenerateQuad());
-	HeightMap* terrainHeightMap = new HeightMap(TEXTUREDIR"noise5.jpg");
+	HeightMap* terrainHeightMap = new HeightMap(TEXTUREDIR"noise5-big.jpg");
 	dimensions = terrainHeightMap->GetHeightmapSize();
 	geometries.push_back(terrainHeightMap);
 }
@@ -121,7 +121,7 @@ void Scene::LoadTextures() {
 }
 
 void Scene::AddCamera() {
-	currentCamera = new PerspectiveCamera(-45, 0.0f, dimensions * Vector3(0.5f, 5.0f, 0.5f), 1.0f, 15000.0f, (float)width / (float)height, 45.0f);
+	currentCamera = new PerspectiveCamera(-45, 0.0f, dimensions * Vector3(0.5f, 1.0f, 0.5f), 1.0f, 15000.0f, (float)width / (float)height, 45.0f);
 	AddChild(currentCamera);
 }
 

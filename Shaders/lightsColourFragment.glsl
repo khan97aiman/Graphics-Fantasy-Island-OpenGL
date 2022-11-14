@@ -146,9 +146,9 @@ void main(void) {
 
 	fragColour = vec4(result, 1.0);
     
-//    if (IN.worldPos.y == 0) {
-//        fragColour = vec4(1.0, 0.0, 0.0, 1.0); //pebbles
-//    }
+    if (IN.worldPos.y == 0) {
+        fragColour = vec4(1.0, 0.0, 0.0, 1.0); //pebbles
+    }
 //
 //    if (IN.worldPos.y <= 100 && IN.worldPos.y > 0) {
 //        fragColour = vec4(0.0, 1.0, 0.0, 1.0); //grassy rock

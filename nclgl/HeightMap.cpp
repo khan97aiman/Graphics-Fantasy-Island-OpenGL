@@ -20,6 +20,7 @@ HeightMap::HeightMap(const std::string& name) {
 		for (int x = 0; x < iWidth; ++x) {
 			int offset = (z * iWidth) + x;
 			vertices[offset] = Vector3(x, data[offset], z) * vertexScale;
+			if (vertices[offset].y == 0) vertices[offset].y += (rand() % 20);
 			textureCoords[offset] = Vector2(x, z) * textureScale;
 			//colours[offset] = Vector4(1, 0.3f, 0, 0.4f);
 		}

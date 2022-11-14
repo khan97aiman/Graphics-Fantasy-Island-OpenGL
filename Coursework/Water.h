@@ -22,7 +22,24 @@ public:
 
 		GeometryNode::Update(dt);
 	}
+	virtual void SendTextureToShader(Shader* s) {
+		glUniform1i(glGetUniformLocation(s->GetProgram(), "cubeTex"), 0);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, cubeMapTexture);
+
+
+		glUniform1i(glGetUniformLocation(s->GetProgram(), "waterTex"), 1); //handle texture in geometry class
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, waterTexture);
+
+	}
+	void SetTexture(GLuint& cubeMapTexture, GLuint& waterTexture) {
+		this->cubeMapTexture = cubeMapTexture;
+		this->waterTexture = waterTexture;
+	}
 protected:
 	float waterRotate = 0.0f;
 	float waterCycle = 0.0f;
+	GLuint cubeMapTexture;
+	GLuint waterTexture;
 };

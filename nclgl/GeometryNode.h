@@ -22,6 +22,7 @@ public:
 	virtual void Render();
 	virtual void Update(float dt);	
 	virtual void SendDataToShader(Shader* s, int index);
+	virtual void SendTextureToShader(Shader* s) {}
 protected:
 	Mesh* mesh = NULL;
 	Vector3 modelScale = Vector3(1, 1, 1);

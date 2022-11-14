@@ -18,6 +18,7 @@ void GeometryNode::SendDataToShader(Shader* s, int index) {
 	if (hasMaterial) {
 		material.SendDataToShader(s);
 	}
+	SendTextureToShader(s);
 }
 
 void GeometryNode::Render() {

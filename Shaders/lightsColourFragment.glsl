@@ -146,25 +146,25 @@ void main(void) {
 
 	fragColour = vec4(result, 1.0);
     
-    if (IN.worldPos.y == 0) {
-        fragColour = vec4(1.0, 0.0, 0.0, 1.0); //pebbles
-    }
-
-    if (IN.worldPos.y <= 100 && IN.worldPos.y > 0) {
-        fragColour = vec4(0.0, 1.0, 0.0, 1.0); //grassy rock
-    }
-
-    if (IN.worldPos.y <= 400 && IN.worldPos.y > 100) {
-        fragColour = vec4(0.0, 0.0, 1.0, 1.0); //grass
-    }
-
-    if (IN.worldPos.y <= 800 && IN.worldPos.y > 400) {
-        fragColour = vec4(1.0, 0.0, 1.0, 1.0); //grassy mountain
-    }
-    if (IN.worldPos.y <= 1000 && IN.worldPos.y > 800) {
-        fragColour = vec4(1.0, 1.0, 1.0, 1.0); //rocky mountain
-    }
-    if (IN.worldPos.y <= 1255 && IN.worldPos.y > 1000) {
-        fragColour = vec4(1.0, 1.0, 0.0, 1.0); //rocky mountain
-    }
+//    if (IN.worldPos.y == 0) {
+//        fragColour = vec4(1.0, 0.0, 0.0, 1.0); //pebbles
+//    }
+//
+//    if (IN.worldPos.y <= 100 && IN.worldPos.y > 0) {
+//        fragColour = vec4(0.0, 1.0, 0.0, 1.0); //grassy rock
+//    }
+//
+//    if (IN.worldPos.y <= 400 && IN.worldPos.y > 100) {
+//        fragColour = vec4(0.0, 0.0, 1.0, 1.0); //grass
+//    }
+//
+//    if (IN.worldPos.y <= 800 && IN.worldPos.y > 400) {
+//        fragColour = vec4(1.0, 0.0, 1.0, 1.0); //grassy mountain
+//    }
+//    if (IN.worldPos.y <= 1000 && IN.worldPos.y > 800) {
+//        fragColour = vec4(1.0, 1.0, 1.0, 1.0); //rocky mountain
+//    }
+//    if (IN.worldPos.y <= 1255 && IN.worldPos.y > 1000) {
+//        fragColour = vec4(1.0, 1.0, 0.0, 1.0); //rocky mountain
+//    }
 }

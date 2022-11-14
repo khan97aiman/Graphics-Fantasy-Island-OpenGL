@@ -53,19 +53,6 @@ void Scene::Render() {
 			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "numSpotLights"), 0); //change these numbers to vector size
 			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "numPointLights"), 0);
 
-			//Sending Texture Data
-			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "cubeTex"), 0);
-			glActiveTexture(GL_TEXTURE0);
-			glBindTexture(GL_TEXTURE_CUBE_MAP, textures[0]);
-
-			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "diffuseTex"), 1); //handle texture in geometry class
-			glActiveTexture(GL_TEXTURE1);
-			glBindTexture(GL_TEXTURE_2D, textures[1]);
-
-			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "waterTex"), 2); //handle texture in geometry class
-			glActiveTexture(GL_TEXTURE2);
-			glBindTexture(GL_TEXTURE_2D, textures[2]);
-
 			for (int i = 0; i < directionalLights.size(); i++) {
 				directionalLights[i]->SendDataToShader(currentShader, i);
 			}
@@ -121,6 +108,8 @@ void Scene::LoadTextures() {
 	);
 	textures.push_back(SOIL_load_OGL_texture(TEXTUREDIR"Barren Reds.JPG", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
 	textures.push_back(SOIL_load_OGL_texture(TEXTUREDIR"water.TGA", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
+	//textures.push_back(SOIL_load_OGL_texture(TEXTUREDIR"pebbles.jpg", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
+
 	for (auto& texture = textures.begin() + 1; texture != textures.end(); ++texture) {
 		if (!*texture) {
 			return;
@@ -149,12 +138,15 @@ void Scene::AddLights() {
 
 void Scene::AddObjects() {	
 	Skybox* skybox = new Skybox(geometries[0], shaders[0]);
+	skybox->SetTexture(textures[0]);
 	AddChild(skybox);
 
 	Terrain* terrain = new Terrain(geometries[1], shaders[1]);
+	terrain->SetTexture(textures[1]);
 	AddChild(terrain);
 
 	Water* water = new Water(geometries[0], shaders[2], dimensions);
+	water->SetTexture(textures[0], textures[2]);
 	AddChild(water);
 }
 

@@ -106,9 +106,12 @@ void Scene::LoadTextures() {
 			SOIL_LOAD_RGB, SOIL_CREATE_NEW_ID, 0
 		)
 	);
-	textures.push_back(SOIL_load_OGL_texture(TEXTUREDIR"Barren Reds.JPG", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
 	textures.push_back(SOIL_load_OGL_texture(TEXTUREDIR"water.TGA", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
-	//textures.push_back(SOIL_load_OGL_texture(TEXTUREDIR"pebbles.jpg", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
+	textures.push_back(SOIL_load_OGL_texture(TEXTUREDIR"mud.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
+	textures.push_back(SOIL_load_OGL_texture(TEXTUREDIR"mountain-rock.jpeg", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
+	textures.push_back(SOIL_load_OGL_texture(TEXTUREDIR"grass.jpeg", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
+	textures.push_back(SOIL_load_OGL_texture(TEXTUREDIR"snow-grass.jpg", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
+
 
 	for (auto& texture = textures.begin() + 1; texture != textures.end(); ++texture) {
 		if (!*texture) {
@@ -129,10 +132,10 @@ void Scene::AddLights() {
 	directionalLights.push_back(new DirectionalLight(Vector3(1, -1, 0)));
 	AddChild(directionalLights.back());
 
-	pointLights.push_back(new PointLight(Vector3(2048, 153, 2048)));
+	pointLights.push_back(new PointLight(dimensions * Vector3(0.5f, 1.0f, 0.5f)));
 	AddChild(pointLights.back());
 
-	spotLights.push_back(new SpotLight(Vector3(2048, 53, 2048), Vector3(-1, -1, 0), 45.0f));
+	spotLights.push_back(new SpotLight(dimensions * Vector3(0.5f, 1.0f, 0.5f), Vector3(-1, -1, 0), 45.0f));
 	AddChild(spotLights.back());
 }
 
@@ -142,11 +145,11 @@ void Scene::AddObjects() {
 	AddChild(skybox);
 
 	Terrain* terrain = new Terrain(geometries[1], shaders[1]);
-	terrain->SetTexture(textures[1]);
+	terrain->SetTexture(textures[2], textures[3], textures[4], textures[5]);
 	AddChild(terrain);
 
 	Water* water = new Water(geometries[0], shaders[2], dimensions);
-	water->SetTexture(textures[0], textures[2]);
+	water->SetTexture(textures[0], textures[1]);
 	AddChild(water);
 }
 

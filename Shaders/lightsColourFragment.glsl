@@ -219,9 +219,9 @@ void main(void) {
     else if (IN.worldPos.y <= 150 && IN.worldPos.y > 20) {
         fragColour = fragColour * mix(texture(mudTex, IN.texCoord), texture(grassTex, IN.texCoord), (IN.worldPos.y - 20)/(150-20)); 
     }
-    else if (IN.worldPos.y <= 700 && IN.worldPos.y > 150) {
+    else if (IN.worldPos.y <= 1255 && IN.worldPos.y > 150) {
         //fragColour = fragColour * vec4(texture(grassTex, IN.texCoord));// * vec4(texture(rockTex, IN.texCoord)); //pebbles
-        fragColour = fragColour * mix(texture(grassTex, IN.texCoord), texture(rockTex, IN.texCoord), (IN.worldPos.y - 150)/(700-150)); //change pebbles to another texture
+        fragColour = fragColour * mix(texture(grassTex, IN.texCoord), texture(rockTex, IN.texCoord), (IN.worldPos.y - 150)/(1255-150)); //change pebbles to another texture
     }
 //    else if (IN.worldPos.y <= 1000 && IN.worldPos.y > 400) {
 //        float a = clamp(norm.y, 0, 1);
@@ -229,13 +229,13 @@ void main(void) {
 //        //fragColour = fragColour * vec4(texture(grassTex, IN.texCoord)) * vec4(texture(rockTex, IN.texCoord)); //pebbles
 //        //fragColour = fragColour * vec4(texture(snowGrassTex, IN.texCoord)); 
 //    }
-    else if (IN.worldPos.y <= 1250 && IN.worldPos.y > 700) {
-        float a = clamp(norm.y, 0, 1);
-
-        fragColour = fragColour * mix(texture(rockTex, IN.texCoord), texture(snowTex, IN.texCoord),(IN.worldPos.y - 700)/(1250-700)) ;
-
-        //fragColour = fragColour * vec4(texture(snowTex, IN.texCoord)); 
-    }
+//    else if (IN.worldPos.y <= 1250 && IN.worldPos.y > 700) {
+//        float a = clamp(norm.y, 0, 1);
+//
+//        fragColour = fragColour * mix(texture(grassTex, IN.texCoord), texture(rockTex, IN.texCoord),(IN.worldPos.y - 700)/(1250-700)) ;
+//
+//        //fragColour = fragColour * vec4(texture(snowTex, IN.texCoord)); 
+//    }
 
 //    if (IN.worldPos.y <= 20 && IN.worldPos.y >= 0) {
 //        fragColour = vec4(1.0, 0.0, 0.0, 1.0); //pebbles

@@ -100,9 +100,9 @@ void Scene::LoadGeometries() {
 void Scene::LoadTextures() {
 	textures.push_back(
 		SOIL_load_OGL_cubemap(
-			TEXTUREDIR"rusted_west.jpg", TEXTUREDIR"rusted_east.jpg",
-			TEXTUREDIR"rusted_up.jpg", TEXTUREDIR"rusted_down.jpg",
-			TEXTUREDIR"rusted_south.jpg", TEXTUREDIR"rusted_north.jpg",
+			TEXTUREDIR"posx.jpg", TEXTUREDIR"negx.jpg",
+			TEXTUREDIR"posy.jpg", TEXTUREDIR"negy.jpg",
+			TEXTUREDIR"posz.jpg", TEXTUREDIR"negz.jpg",
 			SOIL_LOAD_RGB, SOIL_CREATE_NEW_ID, 0
 		)
 	);

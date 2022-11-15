@@ -13,7 +13,7 @@ enum Build {
 
 class Scene : public GroupNode {
 public:
-	Scene(int width, int height);
+	Scene(int width, int height, GameTimer* gameTImer);
 	virtual ~Scene();
 	void BindShader(Shader* s);
 	void Render();
@@ -39,5 +39,6 @@ protected:
 	int height;						// rendering height required for aspect ratio of camera
 	Build buildStatus = FAILED;
 	Vector3 dimensions;
+	GameTimer* gameTImer = NULL;
 };
 

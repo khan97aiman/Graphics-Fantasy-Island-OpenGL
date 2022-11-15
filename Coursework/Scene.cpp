@@ -8,7 +8,7 @@
 #include "Water.h"
 
 
-Scene::Scene(int width, int height) : width(width), height(height) {
+Scene::Scene(int width, int height, GameTimer* gameTImer) : width(width), height(height), gameTImer(gameTImer) {
 	LoadShaders();
 	LoadGeometries();
 	LoadTextures();
@@ -52,6 +52,9 @@ void Scene::Render() {
 			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "numDirectionalLights"), 1);
 			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "numSpotLights"), 0); //change these numbers to vector size
 			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "numPointLights"), 0);
+			
+			glUniform1f(glGetUniformLocation(currentShader->GetProgram(), "time"), gameTImer->GetTotalTimeSeconds());
+
 
 			for (int i = 0; i < directionalLights.size(); i++) {
 				directionalLights[i]->SendDataToShader(currentShader, i);

@@ -18,10 +18,10 @@ public:
 	void Update(float dt) {
 		waterRotate += dt * 1.0f; //2 degrees a second
 		waterCycle += dt * 0.025f; //10 units a second
-		textureMatrix =
+		/*textureMatrix =
 			Matrix4::Translation(Vector3(waterCycle, 0.0f, waterCycle)) *
 			Matrix4::Scale(Vector3(10, 10, 10)) *
-			Matrix4::Rotation(waterRotate, Vector3(0, 0, 1));
+			Matrix4::Rotation(waterRotate, Vector3(0, 0, 1));*/
 
 		GeometryNode::Update(dt);
 	}
@@ -51,5 +51,4 @@ protected:
 	GLuint cubeMapTexture;
 	GLuint waterTexture;
 	GLuint dudvMap;
-
 };

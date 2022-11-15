@@ -1,6 +1,8 @@
 #version 330 core
 
 #define MAX_LIGHTS 100 
+const float waveStrength = 0.2;
+const float waveSpeed = 0.03f;
 
 struct Light {
     vec3 ambient;
@@ -43,7 +45,7 @@ uniform vec3 cameraPos;
 uniform sampler2D waterTex;
 uniform samplerCube cubeTex;
 uniform sampler2D dudvMap;
-
+uniform float time;
 
 in Vertex {
 	vec4 colour;
@@ -64,8 +66,12 @@ void CalcLight(in Light light, in vec3 normal, in vec3 lightDir, in vec3 viewDir
 
     float spec = pow(max(dot(normal, halfwayDir), 0.0), 512); 
 
-    ambient  = light.ambient * vec3(texture(waterTex, IN.texCoord));
-    diffuse  = light.diffuse * light.intensity * diff * vec3(texture(waterTex, IN.texCoord));
+    vec2 distortedTextCoord1 = texture(dudvMap, vec2(IN.texCoord.x + waveSpeed*time, IN.texCoord.y)).rg * 2 - 1 * waveStrength;
+    vec2 distortedTextCoord2 = texture(dudvMap, vec2(-IN.texCoord.x + waveSpeed*time, IN.texCoord.y + waveSpeed*time)).rg * 2 - 1 * waveStrength;
+
+    vec2 totalDistortion = distortedTextCoord1 + distortedTextCoord2;
+    ambient  = light.ambient * vec3(texture(waterTex, totalDistortion));
+    diffuse  = light.diffuse * light.intensity * diff * vec3(texture(waterTex, totalDistortion));
     specular = light.specular * light.intensity *  spec;
 }
 

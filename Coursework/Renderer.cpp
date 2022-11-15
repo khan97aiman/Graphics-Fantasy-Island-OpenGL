@@ -1,7 +1,7 @@
 #include "Renderer.h"
 
 Renderer::Renderer(Window &parent) : OGLRenderer(parent)	{
-	scene = new Scene(width, height);
+	scene = new Scene(width, height, parent.GetTimer());
 	if (scene->GetBuildStatus() == FAILED) {
 		return;
 	}

@@ -26,6 +26,7 @@ public:
 		glUniform3fv(glGetUniformLocation(s->GetProgram(), ("pointLights[" + i + "].base.specular").c_str()), 1, (float*)&specular);
 		glUniform1f(glGetUniformLocation(s->GetProgram(), ("pointLights[" + i + "].base.intensity").c_str()), intensity);
 	}
+	virtual ~PointLight() {}
 protected:
 	Vector3 position;
 	float constant = 1.0f;			//attenuation unaffected by distance

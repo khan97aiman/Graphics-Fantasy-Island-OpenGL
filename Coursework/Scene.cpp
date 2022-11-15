@@ -134,7 +134,7 @@ void Scene::AddCamera() {
 }
 
 void Scene::AddLights() {
-	directionalLights.push_back(new DirectionalLight(Vector3(-1, -1, 10)));
+	directionalLights.push_back(new DirectionalLight(Vector3(-1, -1, 0)));
 	AddChild(directionalLights.back());
 
 	pointLights.push_back(new PointLight(dimensions * Vector3(0.5f, 1.0f, 0.5f)));
@@ -153,7 +153,7 @@ void Scene::AddObjects() {
 	terrain->SetTexture(textures[2], textures[3], textures[4], textures[5]);
 	AddChild(terrain);
 
-	Water* water = new Water(geometries[2], shaders[2], dimensions);
+	Water* water = new Water(geometries[0], shaders[2], dimensions);
 	water->SetTexture(textures[0], textures[1], textures[6]);
 	AddChild(water);
 }

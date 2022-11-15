@@ -42,6 +42,8 @@ uniform vec3 cameraPos;
 
 uniform sampler2D waterTex;
 uniform samplerCube cubeTex;
+uniform sampler2D dudvMap;
+
 
 in Vertex {
 	vec4 colour;
@@ -62,8 +64,8 @@ void CalcLight(in Light light, in vec3 normal, in vec3 lightDir, in vec3 viewDir
 
     float spec = pow(max(dot(normal, halfwayDir), 0.0), 512); 
 
-    ambient  = light.ambient;
-    diffuse  = light.diffuse * light.intensity * diff  * vec3(texture(waterTex, IN.texCoord));
+    ambient  = light.ambient * vec3(texture(waterTex, IN.texCoord));
+    diffuse  = light.diffuse * light.intensity * diff * vec3(texture(waterTex, IN.texCoord));
     specular = light.specular * light.intensity *  spec;
 }
 
@@ -144,7 +146,7 @@ void main(void) {
 	//vec3 refractDir = refract(-viewDir, normalize(IN.normal), ratio);
 	//vec4 refractTex = texture(cubeTex, refractDir );
 
-	fragColour = mix(fragColour, reflectTex, 0.75);
+	fragColour = mix(fragColour, reflectTex, 0.2);
 	//fragColour = (reflectTex) + (diffuse * 0.25f);
 	fragColour.a = 0.5;
 }

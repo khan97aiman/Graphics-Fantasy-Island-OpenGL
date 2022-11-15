@@ -93,8 +93,11 @@ void Scene::LoadShaders() {
 void Scene::LoadGeometries() {
 	geometries.push_back(Mesh::GenerateQuad());
 	HeightMap* terrainHeightMap = new HeightMap(TEXTUREDIR"noise5-big.jpg");
+	HeightMap* waterHeightMap = new HeightMap(TEXTUREDIR"sea-noise1.jpg", true);
 	dimensions = terrainHeightMap->GetHeightmapSize();
 	geometries.push_back(terrainHeightMap);
+	geometries.push_back(waterHeightMap);
+
 }
 
 void Scene::LoadTextures() {
@@ -148,7 +151,7 @@ void Scene::AddObjects() {
 	terrain->SetTexture(textures[2], textures[3], textures[4], textures[5]);
 	AddChild(terrain);
 
-	Water* water = new Water(geometries[0], shaders[2], dimensions);
+	Water* water = new Water(geometries[2], shaders[2], dimensions);
 	water->SetTexture(textures[0], textures[1]);
 	AddChild(water);
 }

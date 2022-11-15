@@ -49,7 +49,7 @@ public:
 	static Mesh* GenerateQuad();
 
 	Mesh(void);
-	~Mesh(void);
+	virtual ~Mesh(void);
 
 	void Draw();
 	void DrawSubMesh(int i);

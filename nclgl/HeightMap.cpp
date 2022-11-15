@@ -1,6 +1,6 @@
 #include "HeightMap.h"
 
-HeightMap::HeightMap(const std::string& name) {
+HeightMap::HeightMap(const std::string& name, bool seaLevel) {
 	int iWidth, iHeight, iChans;
 	unsigned char* data = SOIL_load_image(name.c_str(), & iWidth, &iHeight, &iChans, 1);
 	if (!data) {
@@ -11,18 +11,17 @@ HeightMap::HeightMap(const std::string& name) {
 	numIndices = (iWidth - 1) * (iHeight - 1) * 6;
 	vertices = new Vector3[numVertices];
 	textureCoords = new Vector2[numVertices];
-	//colours = new Vector4[numVertices];
 	indices = new GLuint[numIndices];
 
-	Vector3 vertexScale = Vector3(16.0f, 5.0f, 16.0f);
+	float heightMultipier = seaLevel ? 1.0f : 5.0f;
+	Vector3 vertexScale = Vector3(16.0f, heightMultipier, 16.0f);
 	Vector2 textureScale = Vector2(1 / 16.0f, 1 / 16.0f);
 	for (int z = 0; z < iHeight; ++z) {
 		for (int x = 0; x < iWidth; ++x) {
 			int offset = (z * iWidth) + x;
 			vertices[offset] = Vector3(x, data[offset], z) * vertexScale;
-			if (vertices[offset].y == 0) vertices[offset].y += (rand() % 20);
+			if (!seaLevel && vertices[offset].y == 0) vertices[offset].y += (rand() % 20);
 			textureCoords[offset] = Vector2(x, z) * textureScale;
-			//colours[offset] = Vector4(1, 0.3f, 0, 0.4f);
 		}
 	}
 	SOIL_free_image_data(data);

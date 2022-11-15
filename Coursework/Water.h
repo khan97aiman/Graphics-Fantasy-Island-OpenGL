@@ -28,18 +28,25 @@ public:
 		glBindTexture(GL_TEXTURE_CUBE_MAP, cubeMapTexture);
 
 
-		glUniform1i(glGetUniformLocation(s->GetProgram(), "waterTex"), 1); //handle texture in geometry class
+		glUniform1i(glGetUniformLocation(s->GetProgram(), "waterTex"), 1); 
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, waterTexture);
 
+		glUniform1i(glGetUniformLocation(s->GetProgram(), "dudvMap"), 2);
+		glActiveTexture(GL_TEXTURE2);
+		glBindTexture(GL_TEXTURE_2D, waterTexture);
+
 	}
-	void SetTexture(GLuint& cubeMapTexture, GLuint& waterTexture) {
+	void SetTexture(GLuint& cubeMapTexture, GLuint& waterTexture, GLuint& dudvMap) {
 		this->cubeMapTexture = cubeMapTexture;
 		this->waterTexture = waterTexture;
+		this->dudvMap = dudvMap;
 	}
 protected:
 	float waterRotate = 0.0f;
 	float waterCycle = 0.0f;
 	GLuint cubeMapTexture;
 	GLuint waterTexture;
+	GLuint dudvMap;
+
 };

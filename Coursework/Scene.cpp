@@ -50,7 +50,7 @@ void Scene::Render() {
 
 			//Sending Number of Lights
 			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "numDirectionalLights"), 1);
-			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "numSpotLights"), 1); //change these numbers to vector size
+			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "numSpotLights"), 0); //change these numbers to vector size
 			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "numPointLights"), 0);
 
 			for (int i = 0; i < directionalLights.size(); i++) {
@@ -114,6 +114,8 @@ void Scene::LoadTextures() {
 	textures.push_back(SOIL_load_OGL_texture(TEXTUREDIR"mountain-rock.jpeg", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
 	textures.push_back(SOIL_load_OGL_texture(TEXTUREDIR"grass.jpeg", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
 	textures.push_back(SOIL_load_OGL_texture(TEXTUREDIR"snow-grass.jpg", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
+	textures.push_back(SOIL_load_OGL_texture(TEXTUREDIR"water-dudv.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
+
 
 
 	for (auto& texture = textures.begin() + 1; texture != textures.end(); ++texture) {
@@ -132,7 +134,7 @@ void Scene::AddCamera() {
 }
 
 void Scene::AddLights() {
-	directionalLights.push_back(new DirectionalLight(Vector3(-1, -1, 0)));
+	directionalLights.push_back(new DirectionalLight(Vector3(-1, -1, 10)));
 	AddChild(directionalLights.back());
 
 	pointLights.push_back(new PointLight(dimensions * Vector3(0.5f, 1.0f, 0.5f)));
@@ -152,7 +154,7 @@ void Scene::AddObjects() {
 	AddChild(terrain);
 
 	Water* water = new Water(geometries[2], shaders[2], dimensions);
-	water->SetTexture(textures[0], textures[1]);
+	water->SetTexture(textures[0], textures[1], textures[6]);
 	AddChild(water);
 }
 

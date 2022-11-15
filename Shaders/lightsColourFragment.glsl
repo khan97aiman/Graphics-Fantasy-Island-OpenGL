@@ -185,15 +185,20 @@ void main(void) {
     }
 
 	fragColour = vec4(result, 1.0);
+
+    float minMudLevel = 0;
+    float maxMudLevel = 20;
+    float maxGrassLevel = 150;
+    float maxRockLevel = 1255;
     
-    if (IN.worldPos.y <= 20 && IN.worldPos.y >= 0) {
+    if (IN.worldPos.y <= maxMudLevel && IN.worldPos.y >= minMudLevel) {
         fragColour = fragColour * mix(textureNoTile(mudTex, IN.texCoord), texture(mudTex, IN.texCoord), 0);
     }
-    else if (IN.worldPos.y <= 150 && IN.worldPos.y > 20) {
-        fragColour = fragColour * mix(texture(mudTex, IN.texCoord), texture(grassTex, IN.texCoord), (IN.worldPos.y - 20)/(150-20)); 
+    else if (IN.worldPos.y <= maxGrassLevel && IN.worldPos.y > maxMudLevel) {
+        fragColour = fragColour * mix(texture(mudTex, IN.texCoord), texture(grassTex, IN.texCoord), (IN.worldPos.y - maxMudLevel)/(maxGrassLevel-maxMudLevel)); 
     }
-    else if (IN.worldPos.y <= 1255 && IN.worldPos.y > 150) {
-        fragColour = fragColour * mix(texture(grassTex, IN.texCoord), texture(rockTex, IN.texCoord), (IN.worldPos.y - 150)/(1255-150)); //change pebbles to another texture
+    else if (IN.worldPos.y <= maxRockLevel && IN.worldPos.y > maxGrassLevel) {
+        fragColour = fragColour * mix(texture(grassTex, IN.texCoord), texture(rockTex, IN.texCoord), (IN.worldPos.y - maxGrassLevel)/(maxRockLevel-maxGrassLevel));
     }
 //    else if (IN.worldPos.y <= 1250 && IN.worldPos.y > 700) {
 //        fragColour = fragColour * mix(texture(grassTex, IN.texCoord), texture(rockTex, IN.texCoord),(IN.worldPos.y - 700)/(1250-700)) ;

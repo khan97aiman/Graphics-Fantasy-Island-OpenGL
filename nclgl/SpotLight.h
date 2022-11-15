@@ -13,7 +13,7 @@ public:
 	void SendDataToShader(Shader* s, int index) {
 		std::string i = std::to_string(index);
 		glUniform3fv(glGetUniformLocation(s->GetProgram(), ("spotLights[" + i + "].axis").c_str()), 1, (float*)&axis);
-		glUniform1f(glGetUniformLocation(s->GetProgram(), ("spotLights[" + i + "].cutOff").c_str()), cutOff);
+		glUniform1f(glGetUniformLocation(s->GetProgram(), ("spotLights[" + i + "].cutOff").c_str()), std::cos(cutOff * std::acos(-1)/180));
 
 		glUniform3fv(glGetUniformLocation(s->GetProgram(), ("spotLights[" + i + "].base.position").c_str()), 1, (float*)&position);
 		glUniform1f(glGetUniformLocation(s->GetProgram(), ("spotLights[" + i + "].base.constant").c_str()), constant);

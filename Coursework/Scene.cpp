@@ -50,7 +50,7 @@ void Scene::Render() {
 
 			//Sending Number of Lights
 			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "numDirectionalLights"), 1);
-			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "numSpotLights"), 0); //change these numbers to vector size
+			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "numSpotLights"), 1); //change these numbers to vector size
 			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "numPointLights"), 0);
 
 			for (int i = 0; i < directionalLights.size(); i++) {
@@ -124,25 +124,25 @@ void Scene::LoadTextures() {
 }
 
 void Scene::AddCamera() {
-	currentCamera = new PerspectiveCamera(-45, 0.0f, dimensions * Vector3(0.5f, 1.0f, 0.5f), 1.0f, 15000.0f, (float)width / (float)height, 45.0f);
+	currentCamera = new PerspectiveCamera(-45, 0.0f, dimensions * Vector3(0.5, 1.0f, 0.5f), 1.0f, 15000.0f, (float)width / (float)height, 45.0f);
 	AddChild(currentCamera);
 }
 
 void Scene::AddLights() {
-	directionalLights.push_back(new DirectionalLight(Vector3(1, -1, 0)));
+	directionalLights.push_back(new DirectionalLight(Vector3(-1, -1, 0)));
 	AddChild(directionalLights.back());
 
 	pointLights.push_back(new PointLight(dimensions * Vector3(0.5f, 1.0f, 0.5f)));
 	AddChild(pointLights.back());
 
-	spotLights.push_back(new SpotLight(dimensions * Vector3(0.5f, 1.0f, 0.5f), Vector3(-1, -1, 0), 45.0f));
+	spotLights.push_back(new SpotLight(dimensions * Vector3(0.5f, 5.0f, 0.5f), Vector3(0, -1, 0), 45.0f));
 	AddChild(spotLights.back());
 }
 
 void Scene::AddObjects() {	
-	Skybox* skybox = new Skybox(geometries[0], shaders[0]);
+	/*Skybox* skybox = new Skybox(geometries[0], shaders[0]);
 	skybox->SetTexture(textures[0]);
-	AddChild(skybox);
+	AddChild(skybox);*/
 
 	Terrain* terrain = new Terrain(geometries[1], shaders[1]);
 	terrain->SetTexture(textures[2], textures[3], textures[4], textures[5]);

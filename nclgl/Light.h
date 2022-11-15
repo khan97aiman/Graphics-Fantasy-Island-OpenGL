@@ -6,6 +6,7 @@
 * The diffuse intensity of a light is the aspect of the light that interacts with diffuse material color,  
 * The specular intensity of a light is what interacts with specular material color.
 * The ambient intensity of a light in OpenGL is added to the general level of ambient light.
+* Light intensity refers to the strength or amount of light produced by a specific lamp source
 * Read more here: https://math.hws.edu/graphicsbook/c4/s1.html
 */
 class Light: public SceneNode {
@@ -19,7 +20,7 @@ public:
 	}
 	void Update(float dt) {}
 	void Render() {}
-
+	virtual ~Light() {}
 	virtual NodeType GetNodeType() { return LIGHT; }
 	virtual void SendDataToShader(Shader* s, int index) = 0;
 

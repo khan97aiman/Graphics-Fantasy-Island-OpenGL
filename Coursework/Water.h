@@ -7,9 +7,9 @@ public:
 		hasTextureMatrix = true;
 
 		transform =
-			Matrix4::Translation(size * 0.5f + Vector3(0, -600, 0)) *
+			Matrix4::Translation(size * 0.5f + Vector3(0, -120, 0)) *
 			Matrix4::Scale(size * 1.0f) *
-			Matrix4::Rotation(-90, Vector3(1, 0, 0));
+			Matrix4::Rotation(-70, Vector3(1, 0, 0));
 
 	}
 	void Update(float dt) {

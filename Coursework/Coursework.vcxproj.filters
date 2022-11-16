@@ -38,5 +38,8 @@
     <ClInclude Include="Water.h">
       <Filter>Scene Objects</Filter>
     </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>Scene Objects</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

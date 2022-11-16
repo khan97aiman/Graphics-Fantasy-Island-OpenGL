@@ -6,12 +6,14 @@
 #include "Terrain.h"
 #include "Skybox.h"
 #include "Water.h"
+#include "Monster.h"
 
 
 Scene::Scene(int width, int height, GameTimer* gameTImer) : width(width), height(height), gameTImer(gameTImer) {
 	LoadShaders();
 	LoadGeometries();
 	LoadTextures();
+	LoadSkeletons();
 	
 	AddLights();	// Lights
 	AddCamera();	// Camera
@@ -20,6 +22,12 @@ Scene::Scene(int width, int height, GameTimer* gameTImer) : width(width), height
 
 Scene::~Scene() {
 	for (const auto& i : geometries) {
+		delete i;
+	}
+	for (const auto& i : meshMaterials) {
+		delete i;
+	}
+	for (const auto& i : meshAnimations) {
 		delete i;
 	}
 	for (const auto& i : shaders) {
@@ -84,7 +92,7 @@ void Scene::LoadShaders() {
 	shaders.push_back(new Shader("skyboxVertex.glsl", "skyboxFragment.glsl"));
 	shaders.push_back(new Shader("matrixVertex.glsl", "lightsColourFragment.glsl"));
 	shaders.push_back(new Shader("reflectVertex.glsl", "reflectFragment.glsl"));
-
+	shaders.push_back(new Shader("skinningVertex.glsl", "texturedFragment.glsl"));
 
 	for (const auto& shader : shaders) {
 		if (!shader->LoadSuccess()) {
@@ -100,7 +108,6 @@ void Scene::LoadGeometries() {
 	dimensions = terrainHeightMap->GetHeightmapSize();
 	geometries.push_back(terrainHeightMap);
 	geometries.push_back(waterHeightMap);
-
 }
 
 void Scene::LoadTextures() {
@@ -131,6 +138,25 @@ void Scene::LoadTextures() {
 	buildStatus = SUCCESS;
 }
 
+void Scene::LoadSkeletons() {
+	Mesh* mesh = Mesh::LoadFromMeshFile("Role_T.msh");
+	geometries.push_back(mesh);
+	MeshMaterial* meshMaterial = new MeshMaterial("Role_T.mat");
+	meshMaterials.push_back(meshMaterial);
+	meshAnimations.push_back(new MeshAnimation("Role_T.anm"));
+
+	std::vector<GLuint> temp;
+	for (int i = 0; i < mesh->GetSubMeshCount(); ++i) {
+		const MeshMaterialEntry* matEntry = meshMaterial->GetMaterialForLayer(i);
+		const string* filename = nullptr;
+		matEntry->GetEntry("Diffuse", &filename);
+		string path = TEXTUREDIR + *filename;
+		GLuint texID = SOIL_load_OGL_texture(path.c_str(), SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y);
+		textures.emplace_back(texID);
+		temp.emplace_back(texID);
+	}
+	skeletalTextures.push_back(temp);
+}
 void Scene::AddCamera() {
 	currentCamera = new PerspectiveCamera(-45, 0.0f, dimensions * Vector3(0.5, 1.0f, 0.5f), 1.0f, 15000.0f, (float)width / (float)height, 45.0f);
 	AddChild(currentCamera);
@@ -148,13 +174,21 @@ void Scene::AddLights() {
 }
 
 void Scene::AddObjects() {	
-	/*Skybox* skybox = new Skybox(geometries[0], shaders[0]);
+	Skybox* skybox = new Skybox(geometries[0], shaders[0]);
 	skybox->SetTexture(textures[0]);
-	AddChild(skybox);*/
+	AddChild(skybox);
 
 	Terrain* terrain = new Terrain(geometries[1], shaders[1]);
 	terrain->SetTexture(textures[2], textures[3], textures[4], textures[5]);
 	AddChild(terrain);
+
+	Monster* monster = new Monster(geometries[3], meshAnimations[0], shaders[3]);
+	monster->SetTexture(skeletalTextures[0]);
+	Matrix4 z = Matrix4();
+	z.ToZero();
+	//monster->SetTransform(z);
+	//monster->SetTransform(Matrix4::Translation(Vector3(- dimensions.x / 2, 100, -dimensions.z / 2))*Matrix4::Scale(10000000.0f));
+	AddChild(monster);
 
 	Water* water = new Water(geometries[0], shaders[2], dimensions);
 	water->SetTexture(textures[0], textures[1], textures[6]);

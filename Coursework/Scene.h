@@ -5,6 +5,8 @@
 #include <nclgl/PointLight.h>
 #include <nclgl/SpotLight.h>
 #include <nclgl/Camera.h>
+#include <nclgl/MeshAnimation.h>
+#include <nclgl/MeshMaterial.h>
 
 enum Build {
 	FAILED,
@@ -21,6 +23,7 @@ public:
 	void LoadShaders();
 	void LoadGeometries();
 	void LoadTextures();
+	void LoadSkeletons();
 	void AddLights();
 	void AddCamera();
 	void AddObjects();
@@ -28,7 +31,12 @@ public:
 	void SetTextureRepeating(GLuint target, bool repeating);
 protected:
 	std::vector<Mesh*> geometries;	// change to Geometry type
+	std::vector<MeshMaterial*> meshMaterials;	
+	std::vector<MeshAnimation*> meshAnimations;	
+
 	std::vector<GLuint> textures;
+	std::vector<std::vector<GLuint>> skeletalTextures; //to store textures for each skeleton
+
 	std::vector<Shader*> shaders;
 	std::vector<DirectionalLight*> directionalLights;
 	std::vector<PointLight*> pointLights;

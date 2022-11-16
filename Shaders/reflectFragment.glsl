@@ -66,8 +66,8 @@ void CalcLight(in Light light, in vec3 normal, in vec3 lightDir, in vec3 viewDir
 
     float spec = pow(max(dot(normal, halfwayDir), 0.0), 512); 
 
-    vec2 distortedTextCoord1 = texture(dudvMap, vec2(IN.texCoord.x + waveSpeed*time, IN.texCoord.y)).rg * 2 - 1 * waveStrength;
-    vec2 distortedTextCoord2 = texture(dudvMap, vec2(-IN.texCoord.x + waveSpeed*time, IN.texCoord.y + waveSpeed*time)).rg * 2 - 1 * waveStrength;
+    vec2 distortedTextCoord1 = texture(dudvMap, vec2(IN.texCoord.x + mod(waveSpeed*time, 1), IN.texCoord.y)).rg * 2 - 1 * waveStrength;
+    vec2 distortedTextCoord2 = texture(dudvMap, vec2(-IN.texCoord.x + mod(waveSpeed*time, 1), IN.texCoord.y + mod(waveSpeed*time, 1))).rg * 2 - 1 * waveStrength;
 
     vec2 totalDistortion = distortedTextCoord1 + distortedTextCoord2;
     ambient  = light.ambient * vec3(texture(waterTex, totalDistortion));

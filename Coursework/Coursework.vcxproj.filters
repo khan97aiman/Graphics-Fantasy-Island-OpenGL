@@ -41,5 +41,8 @@
     <ClInclude Include="Monster.h">
       <Filter>Scene Objects</Filter>
     </ClInclude>
+    <ClInclude Include="Tree.h">
+      <Filter>Scene Objects</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

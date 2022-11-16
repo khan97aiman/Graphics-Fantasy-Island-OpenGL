@@ -10,8 +10,8 @@ public:
 		/*	Matrix4::Translation(Vector3(-size.x / 2, 250, -size.z / 2)) *
 			Matrix4::Scale(2.0f) *
 			Matrix4::Rotation(0.95, Vector3(1, 0, 0));*/
-		Matrix4::Translation(size * 0.5f + Vector3(0, -100, 0)) *
-			Matrix4::Scale(size * 1.0f) *
+		Matrix4::Translation(size * 0.5f + Vector3(0, -100, -100)) *
+			Matrix4::Scale(size * 0.5f) *
 			Matrix4::Rotation(-75, Vector3(1, 0, 0));
 
 	}

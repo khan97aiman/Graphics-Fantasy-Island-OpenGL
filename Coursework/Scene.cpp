@@ -7,6 +7,7 @@
 #include "Skybox.h"
 #include "Water.h"
 #include "Monster.h"
+#include "Tree.h"
 
 
 Scene::Scene(int width, int height, GameTimer* gameTImer) : width(width), height(height), gameTImer(gameTImer) {
@@ -93,6 +94,7 @@ void Scene::LoadShaders() {
 	shaders.push_back(new Shader("matrixVertex.glsl", "lightsColourFragment.glsl"));
 	shaders.push_back(new Shader("reflectVertex.glsl", "reflectFragment.glsl"));
 	shaders.push_back(new Shader("skinningVertex.glsl", "texturedFragment.glsl"));
+	shaders.push_back(new Shader("nonSkinningVertex.glsl", "texturedFragment.glsl"));
 
 	for (const auto& shader : shaders) {
 		if (!shader->LoadSuccess()) {
@@ -157,6 +159,24 @@ void Scene::LoadSkeletons() {
 		temp.emplace_back(texID);
 	}
 	skeletalTextures.push_back(temp);
+
+
+	Mesh* treeMesh = Mesh::LoadFromMeshFile("Tree10_4.msh");
+	geometries.push_back(treeMesh);
+	MeshMaterial* treeMaterial = new MeshMaterial("Tree10_4.mat");
+	meshMaterials.push_back(treeMaterial);
+
+	temp.clear();
+	for (int i = 0; i < treeMesh->GetSubMeshCount(); ++i) {
+		const MeshMaterialEntry* matEntry = treeMaterial->GetMaterialForLayer(i);
+		const string* filename = nullptr;
+		matEntry->GetEntry("Diffuse", &filename);
+		string path = TEXTUREDIR + *filename;
+		GLuint texID = SOIL_load_OGL_texture(path.c_str(), SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y);
+		textures.emplace_back(texID);
+		temp.emplace_back(texID);
+	}
+	skeletalTextures.push_back(temp);
 }
 void Scene::AddCamera() {
 	currentCamera = new PerspectiveCamera(-45, 0.0f, (dimensions * Vector3(0.5, 10.0f, 0.5f)), 1.0f, 15000.0f, (float)width / (float)height, 45.0f);
@@ -188,9 +208,20 @@ void Scene::AddObjects() {
 	monster->SetTransform(Matrix4::Translation(Vector3(dimensions.x / 2, 1, dimensions.z / 4)) * Matrix4::Scale(Vector3(500, 500, 500)));
 	AddChild(monster);
 
+	
+
 	Water* water = new Water(geometries[0], shaders[2], dimensions);
 	water->SetTexture(textures[0], textures[1], textures[6]);
 	AddChild(water);
+
+	for (int i = 0; i < 25; i++) {
+		Tree* tree = new Tree(geometries[4], shaders[4]);
+		tree->SetTexture(skeletalTextures[1]);
+		int scale = (rand() % 50) + 100;
+		tree->SetTransform(Matrix4::Translation(Vector3(dimensions.x - 500*i, 450, dimensions.z - 800 + (rand() % 800))) * Matrix4::Scale(Vector3(scale, scale, scale)));
+		AddChild(tree);
+	}
+
 }
 
 void Scene::SetTextureRepeating(GLuint target, bool repeating) {

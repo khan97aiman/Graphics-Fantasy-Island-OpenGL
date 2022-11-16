@@ -33,5 +33,5 @@ void main ( void ) {
 	OUT.texCoord = texCoord;
 	OUT.normal = normalize(normalMatrix * normalize(normal));
 
-	gl_Position = (projMatrix * viewMatrix) * vec4(skelPos.xyz , 1.0);;
+	gl_Position = (projMatrix * viewMatrix) * modelMatrix * vec4(skelPos.xyz , 1.0);;
 }

@@ -106,6 +106,7 @@ void Scene::LoadGeometries() {
 	HeightMap* terrainHeightMap = new HeightMap(TEXTUREDIR"noise5-big.jpg");
 	HeightMap* waterHeightMap = new HeightMap(TEXTUREDIR"sea-noise1.jpg", true);
 	dimensions = terrainHeightMap->GetHeightmapSize();
+	//transform = Matrix4::Translation(Vector3(-dimensions.x / 2, 1, -dimensions.z / 2));
 	geometries.push_back(terrainHeightMap);
 	geometries.push_back(waterHeightMap);
 }
@@ -158,7 +159,7 @@ void Scene::LoadSkeletons() {
 	skeletalTextures.push_back(temp);
 }
 void Scene::AddCamera() {
-	currentCamera = new PerspectiveCamera(-45, 0.0f, dimensions * Vector3(0.5, 1.0f, 0.5f), 1.0f, 15000.0f, (float)width / (float)height, 45.0f);
+	currentCamera = new PerspectiveCamera(-45, 0.0f, (dimensions * Vector3(0.5, 10.0f, 0.5f)), 1.0f, 15000.0f, (float)width / (float)height, 45.0f);
 	AddChild(currentCamera);
 }
 
@@ -184,10 +185,7 @@ void Scene::AddObjects() {
 
 	Monster* monster = new Monster(geometries[3], meshAnimations[0], shaders[3]);
 	monster->SetTexture(skeletalTextures[0]);
-	Matrix4 z = Matrix4();
-	z.ToZero();
-	//monster->SetTransform(z);
-	//monster->SetTransform(Matrix4::Translation(Vector3(- dimensions.x / 2, 100, -dimensions.z / 2))*Matrix4::Scale(10000000.0f));
+	monster->SetTransform(Matrix4::Translation(Vector3(dimensions.x / 2, 1, dimensions.z / 4)) * Matrix4::Scale(Vector3(500, 500, 500)));
 	AddChild(monster);
 
 	Water* water = new Water(geometries[0], shaders[2], dimensions);

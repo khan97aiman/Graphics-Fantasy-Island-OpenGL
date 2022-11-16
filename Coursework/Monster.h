@@ -4,9 +4,7 @@
 
 class Monster : public GeometryNode {
 public:
-	Monster(Mesh* mesh, MeshAnimation* animation, Shader* shader) : GeometryNode("Monster", Matrix4(), mesh, shader), animation(animation) {
-
-	}
+	Monster(Mesh* mesh, MeshAnimation* animation, Shader* shader) : GeometryNode("Monster", Matrix4(), mesh, shader), animation(animation) {}
 	virtual void SendTextureToShader(Shader* s) {
 		glUniform1i(glGetUniformLocation(shader->GetProgram(), "diffuseTex"), 0);
 		for (int i = 0; i < mesh->GetSubMeshCount(); ++i) {
@@ -14,7 +12,7 @@ public:
 			glBindTexture(GL_TEXTURE_2D, matTextures[i]);
 		}
 	}
-	void Update(float dt) {
+	virtual void Update(float dt) {
 		frameTime -= dt;
 		while (frameTime < 0.0f) {
 			currentFrame = (currentFrame + 1) % animation->GetFrameCount();

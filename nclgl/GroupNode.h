@@ -19,8 +19,8 @@ public:
 	virtual void Render();
 	virtual NodeType GetNodeType() { return GROUP; }
 	virtual void SendDataToShader(Shader* s, int index) {}
-protected:
 	void UpdateWorldTransform();
+protected:
 	std::vector<SceneNode*> children;
 	Matrix4 worldTransform;
 	Matrix4 transform;

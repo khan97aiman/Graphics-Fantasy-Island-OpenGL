@@ -4,7 +4,6 @@
 class Terrain : public GeometryNode {
 public:
 	Terrain(Mesh* mesh, Shader* shader) : GeometryNode("Terrain", Matrix4(), mesh, shader) {
-		hasMaterial = true;
 		material = Material(Vector3(1.0f), Vector3(0.0f), 0.4f);
 	}
 	virtual void SendTextureToShader(Shader* s) {

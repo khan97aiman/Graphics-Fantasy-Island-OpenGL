@@ -5,7 +5,6 @@
 class Monster : public GeometryNode {
 public:
 	Monster(Mesh* mesh, MeshAnimation* animation, Shader* shader) : GeometryNode("Monster", Matrix4(), mesh, shader), animation(animation) {
-		hasMaterial = true;
 		material = Material(Vector3(1.0f), Vector3(0.0f), 0);
 	}
 	virtual void SendTextureToShader(Shader* s) {

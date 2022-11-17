@@ -159,24 +159,6 @@ void Scene::LoadSkeletons() {
 	}
 	skeletalTextures.push_back(temp);
 
-	/*Mesh* treeMesh_b = Mesh::LoadFromMeshFile("Tree10_4.msh");
-	geometries.push_back(treeMesh_b);
-	MeshMaterial* treeMaterial_b = new MeshMaterial("Tree10_4.mat");
-	meshMaterials.push_back(treeMaterial_b);
-
-	temp.clear();
-	for (int i = 0; i < treeMesh_b->GetSubMeshCount(); ++i) {
-		const MeshMaterialEntry* matEntry = treeMaterial_b->GetMaterialForLayer(i);
-		const string* filename = nullptr;
-		matEntry->GetEntry("Diffuse", &filename);
-		string path = TEXTUREDIR + *filename;
-		GLuint texID = SOIL_load_OGL_texture(path.c_str(), SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y);
-		textures.emplace_back(texID);
-		temp.emplace_back(texID);
-	}
-	skeletalTextures.push_back(temp);*/
-
-
 	Mesh* treeMesh = Mesh::LoadFromMeshFile("tree1a.msh");
 	geometries.push_back(treeMesh);
 	MeshMaterial* treeMaterial = new MeshMaterial("tree1a.mat");
@@ -238,36 +220,6 @@ void Scene::AddObjects() {
 		tree->SetTransform(Matrix4::Translation(Vector3(dimensions.x * 2.2 - 500 * 24, 700, dimensions.z - dimensions.z / 1.45 + 500 * i)) * Matrix4::Scale(Vector3(scale, scale, scale)));
 		AddChild(tree);
 	}
-
-	/*int scale = 25;
-	for (int i = 0; i < 200; i++) {
-		Tree* tree2 = new Tree(geometries[4], shaders[4]);
-		tree2->SetTexture(skeletalTextures[1]);
-		tree2->SetTransform(Matrix4::Translation(Vector3((rand() % int(dimensions.x - dimensions.x / 8)) + dimensions.x/8, 200, (rand() % int(dimensions.z / 2 - dimensions.z / 8)) + dimensions.z / 8)) * Matrix4::Scale(Vector3(scale, scale, scale)));
-		AddChild(tree2);
-	}*/
-
-	/*Tree* tree = new Tree(geometries[4], shaders[4]);
-	tree->SetTexture(skeletalTextures[1]);
-	tree->SetTransform(Matrix4::Translation(Vector3(dimensions.x, 700, dimensions.z/8)) * Matrix4::Scale(Vector3(scale, scale, scale)));
-	AddChild(tree);*/
-
-	 
-	/*for (int i = 0; i < 30; i++) {
-		Tree* tree = new Tree(geometries[4], shaders[4]);
-		tree->SetTexture(skeletalTextures[1]);
-		int scale = 50;
-		tree->SetTransform(Matrix4::Translation(Vector3(dimensions.x * 1.25 - 500 * i, 700, dimensions.z * 1.2)) * Matrix4::Scale(Vector3(scale, scale, scale)));
-		AddChild(tree);
-	}*/
-
-	//for (int i = 0; i < 25; i++) {
-	//	Tree* tree = new Tree(geometries[4], shaders[4]);
-	//	tree->SetTexture(skeletalTextures[1]);
-	//	int scale = 80;// (rand() % 50) + 100;
-	//	tree->SetTransform(Matrix4::Translation(Vector3(dimensions.x - 500 * i, 450, dimensions.z - 800 + (rand() % 800))) * Matrix4::Scale(Vector3(scale, scale, scale)));
-	//	AddChild(tree);
-	//}
 
 	Terrain* terrain = new Terrain(geometries[1], shaders[1]);
 	terrain->SetTexture(textures[2], textures[3], textures[4], textures[5]);

@@ -34,8 +34,5 @@ protected:
 
 	Material material;
 	Shader* shader = 0;						//0 is the 'null' object name for shader programs...
-	bool hasTextureMatrix = false;
-	bool hasMaterial = false;
-
 };
 

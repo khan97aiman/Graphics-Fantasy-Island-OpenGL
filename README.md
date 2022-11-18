@@ -1,8 +1,8 @@
 # Coursework
 Controls:
-1. Press *** W, A, S, D, LShift and Space ***: control camera movement
-2. Press *** 1 ***: Toggle Day/Night
-3. Press *** 2 ***: Toggle Camera Animation
+1. Press **W, A, S, D, LShift and Space**: control camera movement
+2. Press **1**: Toggle Day/Night
+3. Press **2**: Toggle Camera Animation
 
 # Features
 1. Terrain
@@ -49,7 +49,7 @@ Light's base class has the following properties which are then used by the fragm
 4. Light intensity refers to the strength or amount of light produced by a specific lamp source
 
 ```
-*** My scene has multiple light sources; Pressing 1 toggles between displaying daytime which uses one directional light to light the environment and nighttime which used multiple spot lights and point lights of various colors and intensities to give a pleasant look. ***
+**My scene has multiple light sources; Pressing 1 toggles between displaying daytime which uses one directional light to light the environment and nighttime which used multiple spot lights and point lights of various colors and intensities to give a pleasant look.**
 ```
 
 ## Scene Graph

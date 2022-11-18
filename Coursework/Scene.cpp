@@ -230,6 +230,12 @@ void Scene::AddObjects() {
 	monster->SetTransform(Matrix4::Translation(Vector3(dimensions.x / 2, 1, dimensions.z / 4)) * Matrix4::Scale(Vector3(200, 200, 200)));
 	AddChild(monster);
 
+	Monster* monster2 = new Monster(geometries[3], meshAnimations[0], shaders[3], CLOCKWISE);
+	monster2->SetTexture(skeletalTextures[0]);
+	monster2->SetTransform(Matrix4::Translation(Vector3(dimensions.x / 3, 1, dimensions.z / 4)) * Matrix4::Scale(Vector3(400, 400, 400)) * Matrix4::Rotation(180, Vector3(0, 1, 0)));
+	AddChild(monster2);
+
+
 
 	Water* water = new Water(geometries[0], shaders[2], dimensions);
 	water->SetTexture(textures[0], textures[1], textures[6]);

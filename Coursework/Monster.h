@@ -2,9 +2,14 @@
 #include <nclgl/MeshAnimation.h>
 #include <nclgl/GeometryNode.h>
 
+enum Direction {
+	CLOCKWISE,
+	ANTI_CLOCKWISE,
+};
+
 class Monster : public GeometryNode {
 public:
-	Monster(Mesh* mesh, MeshAnimation* animation, Shader* shader) : GeometryNode("Monster", Matrix4(), mesh, shader), animation(animation) {
+	Monster(Mesh* mesh, MeshAnimation* animation, Shader* shader, Direction direction = ANTI_CLOCKWISE) : GeometryNode("Monster", Matrix4(), mesh, shader), animation(animation), direction(direction) {
 		material = Material(Vector3(1.0f), Vector3(0.0f), 0);
 	}
 	virtual void SendTextureToShader(Shader* s) {
@@ -15,6 +20,16 @@ public:
 		}
 	}
 	virtual void Update(float dt) {
+		//distance = direction ? distance + 0.001 * dt : distance - 0.001 * dt;
+		//rotation = direction ? rotation + 0.01 * dt : rotation - 0.01 * dt;
+
+		distance += 0.001 * dt;
+		rotation -= 0.01 * dt;
+
+		transform = transform * Matrix4::Translation(Vector3(0, 0 , distance)) * Matrix4::Rotation(rotation, Vector3(0, 1, 0));
+
+		if (rotation > 360) rotation -= 360;
+
 		frameTime -= dt;
 		while (frameTime < 0.0f) {
 			currentFrame = (currentFrame + 1) % animation->GetFrameCount();
@@ -44,4 +59,7 @@ protected:
 	MeshAnimation* animation;
 	int currentFrame = 0;
 	float frameTime = 0.0f;
+	float distance = 0;
+	float rotation = 0;
+	Direction direction = ANTI_CLOCKWISE;
 };

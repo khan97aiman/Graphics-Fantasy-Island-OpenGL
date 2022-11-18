@@ -14,9 +14,6 @@ public:
 	virtual void BuildProjectionMatrix() = 0;
 	NodeType GetNodeType() { return CAMERA; }
 	virtual void SendDataToShader(Shader* s, int index = 0);
-	/*Vector3 GetPosition() { return position; }
-	float GetPitch() { return pitch; }
-	float GetYaw() { return yaw; }*/
 protected:
 	void UpdateCameraFromUserInput(float dt);
 	float yaw = 0.0f;
@@ -28,5 +25,6 @@ protected:
 	bool animate = true;
 	int cycle = 0;
 	float startingYaw = 0.0f;
+	bool animationStarted = false;
 };
 

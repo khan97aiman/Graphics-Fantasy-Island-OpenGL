@@ -91,7 +91,7 @@ void Scene::Render() {
 
 void Scene::Update(float dt) {
 	//std::cout << "pitch: " << currentCamera->GetPitch() << " yaw: " << currentCamera->GetYaw() << " position: " << currentCamera->GetPosition() << std::endl;
-	if (Window::GetKeyboard()->KeyDown(KEYBOARD_1)) {
+	if (Window::GetKeyboard()->KeyTriggered(KEYBOARD_1)) {
 		day = !day;
 	}
 	UpdateWorldTransform();

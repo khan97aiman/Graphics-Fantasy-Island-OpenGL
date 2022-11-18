@@ -28,6 +28,13 @@ void Camera::SendDataToShader(Shader* s, int index) {
 
 void Camera::UpdateCameraFromUserInput(float dt) {
 
+	if (Window::GetKeyboard()->KeyTriggered(KEYBOARD_2)) {
+		animate = !animate;
+		if (animate) {
+			animationStarted = false;
+		}
+	}
+
 	Matrix4 rotation = Matrix4::Rotation(yaw, Vector3(0, 1, 0));
 	Vector3 forward = rotation * Vector3(0, 0, -1);
 	Vector3 right = rotation * Vector3(1, 0, 0);
@@ -66,6 +73,12 @@ void Camera::UpdateCameraFromUserInput(float dt) {
 		}
 	}
 	else {
+		if (!animationStarted) {
+			pitch = -25;
+			yaw = 100;
+			position = Vector3(11742, 922.375, 465.768);
+			animationStarted = true;
+		}
 		if (cycle == 0) {
 			yaw += 0.25;
 			if (yaw - startingYaw > 360) {

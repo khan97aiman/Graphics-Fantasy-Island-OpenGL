@@ -25,5 +25,8 @@ protected:
 	Matrix4 viewMatrix;
 	Matrix4 projectionMatrix;
 	Frustum frameFrustum;
+	bool animate = true;
+	int cycle = 0;
+	float startingYaw = 0.0f;
 };
 

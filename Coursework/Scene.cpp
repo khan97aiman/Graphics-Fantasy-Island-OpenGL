@@ -194,7 +194,9 @@ void Scene::AddCamera() {
 }
 
 void Scene::AddLights() {
-	directionalLights.push_back(new DirectionalLight(Vector3(1, -1, 0)));
+	DirectionalLight* d = new DirectionalLight(Vector3(1, -1, 1));
+	d->SetDiffuseColor(Vector3(253, 184, 19)/255);
+	directionalLights.push_back(d);
 	AddChild(directionalLights.back());
 
 	PointLight* p1 = new PointLight(dimensions * Vector3(0.25f, 2.0f, 0.5f));

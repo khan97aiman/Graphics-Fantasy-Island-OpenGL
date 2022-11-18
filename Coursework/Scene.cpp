@@ -57,10 +57,17 @@ void Scene::Render() {
 			//Sending Camera Matrices
 			currentCamera->SendDataToShader(currentShader);
 
-			//Sending Number of Lights
-			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "numDirectionalLights"), 1);
-			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "numSpotLights"), 0); //change these numbers to vector size
-			glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "numPointLights"), 0);
+			if (day) {
+				glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "numDirectionalLights"), directionalLights.size());
+				glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "numSpotLights"), 0); //change these numbers to vector size
+				glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "numPointLights"), 0);
+			}
+			else {
+				//Sending Number of Lights
+				glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "numDirectionalLights"), 0);
+				glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "numSpotLights"), spotLights.size()); //change these numbers to vector size
+				glUniform1i(glGetUniformLocation(currentShader->GetProgram(), "numPointLights"), pointLights.size());
+			}
 			
 			glUniform1f(glGetUniformLocation(currentShader->GetProgram(), "time"), gameTImer->GetTotalTimeSeconds());
 
@@ -83,6 +90,9 @@ void Scene::Render() {
 }
 
 void Scene::Update(float dt) {
+	if (Window::GetKeyboard()->KeyDown(KEYBOARD_1)) {
+		day = !day;
+	}
 	UpdateWorldTransform();
 	for (auto const& i : children) {
 		i->Update(dt);
@@ -185,10 +195,55 @@ void Scene::AddLights() {
 	directionalLights.push_back(new DirectionalLight(Vector3(-1, -1, 0)));
 	AddChild(directionalLights.back());
 
-	pointLights.push_back(new PointLight(dimensions * Vector3(1.0f, 1.0f, 0.5f)));
+	PointLight* p1 = new PointLight(dimensions * Vector3(0.25f, 2.0f, 0.5f));
+	p1->SetIntensity(4.0f);
+	pointLights.push_back(p1);
 	AddChild(pointLights.back());
 
-	spotLights.push_back(new SpotLight(dimensions * Vector3(0.5f, 5.0f, 0.5f), Vector3(0, -1, 0), 45.0f));
+	PointLight* p2 = new PointLight(dimensions * Vector3(0.8f, 3.0f, 0.1f));
+	p2->SetIntensity(4.0f);
+	pointLights.push_back(p2);
+	AddChild(pointLights.back());
+
+	PointLight* p3 = new PointLight(dimensions * Vector3(0.2f, 3.0f, 0.1f));
+	p3->SetIntensity(4.0f);
+	pointLights.push_back(p3);
+	AddChild(pointLights.back());
+
+	PointLight* p4 = new PointLight(dimensions * Vector3(0.5f, 3.0f, 0.5f));
+	p4->SetIntensity(1.0f);
+	p4->SetDiffuseColor(Vector3(135, 206, 235) / 255);
+	pointLights.push_back(p4);
+	AddChild(pointLights.back());
+
+	SpotLight* s1 = new SpotLight(dimensions * Vector3(0.4f, 5.0f, 0.3f), Vector3(1, -1, 0), 45.0f);
+	s1->SetIntensity(2.0f);
+	s1->SetDiffuseColor(Vector3(255, 170, 51) / 255);
+	spotLights.push_back(s1);
+	AddChild(spotLights.back());
+
+	SpotLight* s2 = new SpotLight(dimensions * Vector3(0.3f, 5.0f, 0.3f), Vector3(1, -1, 0), 45.0f);
+	s2->SetIntensity(2.0f);
+	s2->SetDiffuseColor(Vector3(127, 255, 212) / 255);
+	spotLights.push_back(s2);
+	AddChild(spotLights.back());
+
+	SpotLight* s3 = new SpotLight(dimensions * Vector3(0.6f, 5.0f, 0.3f), Vector3(1, 0, 1), 45.0f);
+	s3->SetIntensity(2.0f);
+	s3->SetDiffuseColor(Vector3(135, 206, 235) / 255);
+	spotLights.push_back(s3);
+	AddChild(spotLights.back());
+
+	SpotLight* s4 = new SpotLight(dimensions * Vector3(0.4f, 5.0f, 0.5f), Vector3(1, 0, 1), 45.0f);
+	s4->SetIntensity(4.0f);
+	s4->SetDiffuseColor(Vector3(135, 206, 235) / 255);
+	spotLights.push_back(s4);
+	AddChild(spotLights.back());
+
+	SpotLight* s5 = new SpotLight(dimensions * Vector3(0.5f, 5.0f, 0.5f), Vector3(-1, 0, 1), 45.0f);
+	s5->SetIntensity(4.0f);
+	s5->SetDiffuseColor(Vector3(135, 206, 235) / 255);
+	spotLights.push_back(s5);
 	AddChild(spotLights.back());
 }
 

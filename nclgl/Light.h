@@ -23,6 +23,8 @@ public:
 	virtual ~Light() {}
 	virtual NodeType GetNodeType() { return LIGHT; }
 	virtual void SendDataToShader(Shader* s, int index) = 0;
+	void SetIntensity(float intensity) { this->intensity = intensity; }
+	void SetDiffuseColor(Vector3 diffuse) { this->diffuse = diffuse; }
 
 protected:
 	Vector3 ambient = Vector3(0.5f);		// The ambient light is usually set to a low intensity because we don't want the ambient color to be too dominant.

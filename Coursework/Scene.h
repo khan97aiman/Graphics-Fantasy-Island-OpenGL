@@ -48,5 +48,6 @@ protected:
 	Build buildStatus = FAILED;
 	Vector3 dimensions;
 	GameTimer* gameTImer = NULL;
+	bool day = false;
 };
 

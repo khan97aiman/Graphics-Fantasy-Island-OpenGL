@@ -128,6 +128,8 @@ vec4 hash4( vec2 p ) {
                                    3.0+dot(p,vec2(41.0,29.0)),
                                    4.0+dot(p,vec2(23.0,31.0))))*103.0); 
 }
+
+//taken from https://iquilezles.org/articles/texturerepetition/
 vec4 textureNoTile( sampler2D samp, in vec2 uv )
 {
     ivec2 iuv = ivec2( floor( uv ) );

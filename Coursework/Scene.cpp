@@ -138,7 +138,7 @@ void Scene::LoadTextures() {
 	textures.push_back(SOIL_load_OGL_texture(TEXTUREDIR"grass.jpeg", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
 	textures.push_back(SOIL_load_OGL_texture(TEXTUREDIR"snow-grass.jpg", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
 	textures.push_back(SOIL_load_OGL_texture(TEXTUREDIR"water-dudv.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
-
+	textures.push_back(SOIL_load_OGL_texture(TEXTUREDIR"waterbump.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
 
 
 	for (auto& texture = textures.begin() + 1; texture != textures.end(); ++texture) {
@@ -193,7 +193,7 @@ void Scene::AddCamera() {
 }
 
 void Scene::AddLights() {
-	directionalLights.push_back(new DirectionalLight(Vector3(-1, -1, 0)));
+	directionalLights.push_back(new DirectionalLight(Vector3(1, -1, 0)));
 	AddChild(directionalLights.back());
 
 	PointLight* p1 = new PointLight(dimensions * Vector3(0.25f, 2.0f, 0.5f));
@@ -294,7 +294,7 @@ void Scene::AddObjects() {
 
 
 	Water* water = new Water(geometries[0], shaders[2], dimensions);
-	water->SetTexture(textures[0], textures[1], textures[6]);
+	water->SetTexture(textures[0], textures[1], textures[6], textures[7]);
 	AddChild(water);
 
 }

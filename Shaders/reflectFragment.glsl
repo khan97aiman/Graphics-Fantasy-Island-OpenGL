@@ -45,6 +45,7 @@ uniform vec3 cameraPos;
 uniform sampler2D waterTex;
 uniform samplerCube cubeTex;
 uniform sampler2D dudvMap;
+uniform sampler2D waterbump;
 uniform float time;
 
 in Vertex {
@@ -52,6 +53,8 @@ in Vertex {
 	vec2 texCoord;
 	vec3 normal;
 	vec3 worldPos;
+    vec3 tangent; 
+	vec3 binormal; 
 } IN;
 
 out vec4 fragColour;
@@ -123,22 +126,27 @@ void main(void) {
     vec3 norm = normalize(IN.normal);
     vec3 viewDir = normalize(cameraPos - IN.worldPos);
 
+    mat3 TBN = mat3(normalize(IN.tangent), normalize(IN.binormal), norm);
+
+    vec3 bumpNormal = texture(waterbump , IN.texCoord ).rgb;
+    bumpNormal = normalize(TBN * normalize(bumpNormal * 2.0 - 1.0));
+
 	// define an output color value
 	vec3 result = vec3(0.0);
 
     // add the spot lights contribution to the output
     for(int i = 0; i < numSpotLights; i++) {
-        result += CalcSpotLight(spotLights[i], norm, IN.worldPos, viewDir);
+        result += CalcSpotLight(spotLights[i], bumpNormal, IN.worldPos, viewDir);
     }
 
     // add the directional lights contribution to the output
     for(int i = 0; i < numDirectionalLights; i++) {
-        result += CalcDirectionalLight(directionalLights[i], norm, viewDir);
+        result += CalcDirectionalLight(directionalLights[i], bumpNormal, viewDir);
     }
 
     // add the point lights contribution to the output
     for(int i = 0; i < numPointLights; i++) {
-        result += CalcPointLight(pointLights[i], norm, IN.worldPos, viewDir);
+        result += CalcPointLight(pointLights[i], bumpNormal, IN.worldPos, viewDir);
     }
 
 	fragColour = vec4(result, 1.0);
@@ -147,7 +155,7 @@ void main(void) {
     //vec3 viewDir = normalize(cameraPos - IN.worldPos);
     //vec4 diffuse = texture(waterTex , IN.texCoord );
     
-    vec3 reflectDir = reflect(-viewDir ,normalize(IN.normal ));
+    vec3 reflectDir = reflect(-viewDir ,norm);
     vec4 reflectTex = texture(cubeTex, reflectDir );
 	//vec3 refractDir = refract(-viewDir, normalize(IN.normal), ratio);
 	//vec4 refractTex = texture(cubeTex, refractDir );

@@ -9,6 +9,8 @@ public:
 			Matrix4::Scale(size * Vector3(1.0f, 0.5f, 1.0f)) *
 			Matrix4::Rotation(-105, Vector3(1, 0, 0));
 
+		mesh->GenerateNormals();
+		mesh->GenerateTangents();
 	}
 	virtual void SendTextureToShader(Shader* s) {
 		glUniform1i(glGetUniformLocation(s->GetProgram(), "cubeTex"), 0);
@@ -24,14 +26,19 @@ public:
 		glActiveTexture(GL_TEXTURE2);
 		glBindTexture(GL_TEXTURE_2D, waterTexture);
 
+		glUniform1i(glGetUniformLocation(s->GetProgram(), "waterbump"), 3);
+		glActiveTexture(GL_TEXTURE3);
+		glBindTexture(GL_TEXTURE_2D, waterbump);
 	}
-	void SetTexture(GLuint& cubeMapTexture, GLuint& waterTexture, GLuint& dudvMap) {
+	void SetTexture(GLuint& cubeMapTexture, GLuint& waterTexture, GLuint& dudvMap, GLuint& waterbump) {
 		this->cubeMapTexture = cubeMapTexture;
 		this->waterTexture = waterTexture;
 		this->dudvMap = dudvMap;
+		this->waterbump = waterbump;
 	}
 protected:
 	GLuint cubeMapTexture;
 	GLuint waterTexture;
 	GLuint dudvMap;
+	GLuint waterbump;
 };

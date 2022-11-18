@@ -47,6 +47,8 @@ public:
 	};
 	static Mesh* GenerateTriangle();
 	static Mesh* GenerateQuad();
+	void GenerateTangents();
+	Vector4 GenerateTangent(int a, int b, int c);
 
 	Mesh(void);
 	virtual ~Mesh(void);

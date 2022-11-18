@@ -90,6 +90,7 @@ void Scene::Render() {
 }
 
 void Scene::Update(float dt) {
+	//std::cout << "pitch: " << currentCamera->GetPitch() << " yaw: " << currentCamera->GetYaw() << " position: " << currentCamera->GetPosition() << std::endl;
 	if (Window::GetKeyboard()->KeyDown(KEYBOARD_1)) {
 		day = !day;
 	}
@@ -187,7 +188,7 @@ void Scene::LoadSkeletons() {
 	skeletalTextures.push_back(temp);
 }
 void Scene::AddCamera() {
-	currentCamera = new PerspectiveCamera(-45, 0.0f, (dimensions * Vector3(0.5, 10.0f, 0.5f)), 1.0f, 15000.0f, (float)width / (float)height, 45.0f);
+	currentCamera = new PerspectiveCamera(-25, 100, Vector3(11742, 922.375, 465.768), 1.0f, 15000.0f, (float)width / (float)height, 45.0f);
 	AddChild(currentCamera);
 }
 

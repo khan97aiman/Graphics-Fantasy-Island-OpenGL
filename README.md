@@ -49,7 +49,10 @@ Light's base class has the following properties which are then used by the fragm
 4. Light intensity refers to the strength or amount of light produced by a specific lamp source
 
 ```
-**My scene has multiple light sources; Pressing 1 toggles between displaying daytime which uses one directional light to light the environment and nighttime which used multiple spot lights and point lights of various colors and intensities to give a pleasant look.**
+My scene has multiple light sources:
+Pressing 1 toggles between 
+1. Displaying daytime which uses one directional light to light the environment, and 
+2. Nighttime which used multiple spot lights and point lights of various colors and intensities to give a pleasant look.
 ```
 
 ## Scene Graph

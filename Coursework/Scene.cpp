@@ -139,6 +139,7 @@ void Scene::LoadTextures() {
 	textures.push_back(SOIL_load_OGL_texture(TEXTUREDIR"snow-grass.jpg", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
 	textures.push_back(SOIL_load_OGL_texture(TEXTUREDIR"water-dudv.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
 	textures.push_back(SOIL_load_OGL_texture(TEXTUREDIR"waterbump.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
+	textures.push_back(SOIL_load_OGL_texture(TEXTUREDIR"mountain-rock-normal-map.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS));
 
 
 	for (auto& texture = textures.begin() + 1; texture != textures.end(); ++texture) {
@@ -278,7 +279,7 @@ void Scene::AddObjects() {
 	}
 
 	Terrain* terrain = new Terrain(geometries[1], shaders[1]);
-	terrain->SetTexture(textures[2], textures[3], textures[4], textures[5]);
+	terrain->SetTexture(textures[2], textures[3], textures[4], textures[5], textures[8]);
 	AddChild(terrain);
 
 	Monster* monster = new Monster(geometries[3], meshAnimations[0], shaders[3]);

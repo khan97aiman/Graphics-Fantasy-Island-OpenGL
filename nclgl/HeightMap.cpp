@@ -42,6 +42,7 @@ HeightMap::HeightMap(const std::string& name, bool seaLevel) {
 		}
 	}
 	GenerateNormals();
+	GenerateTangents();
 	BufferData();
 	heightmapSize.x = vertexScale.x * (iWidth - 1);
 	heightmapSize.y = 255.0f;		//each height is a byte!

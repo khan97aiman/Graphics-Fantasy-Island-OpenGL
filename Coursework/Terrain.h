@@ -22,17 +22,22 @@ public:
 		glUniform1i(glGetUniformLocation(s->GetProgram(), "snowTex"), 3);
 		glActiveTexture(GL_TEXTURE3);
 		glBindTexture(GL_TEXTURE_2D, snowTexture);
+
+		glUniform1i(glGetUniformLocation(s->GetProgram(), "bumpmap"), 4);
+		glActiveTexture(GL_TEXTURE4);
+		glBindTexture(GL_TEXTURE_2D, bumpmap);
 	}
-	void SetTexture(GLuint& mudTexture, GLuint& rockTexture, GLuint& grassTexture, GLuint& snowTexture) {
+	void SetTexture(GLuint& mudTexture, GLuint& rockTexture, GLuint& grassTexture, GLuint& snowTexture, GLuint& bumpmap) {
 		this->mudTexture = mudTexture;
 		this->rockTexture = rockTexture;
 		this->grassTexture = grassTexture;
 		this->snowTexture = snowTexture;
+		this->bumpmap = bumpmap;
 	}
 protected:
 	GLuint mudTexture;
 	GLuint rockTexture;
 	GLuint grassTexture;
 	GLuint snowTexture;
-
+	GLuint bumpmap;
 };
